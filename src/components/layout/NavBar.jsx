@@ -17,6 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,7 +29,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appbar: {
-    background: "whites",
+    background: "white",
+  },
+  wrapper: {
+    height: "10%",
+    background: "red",
+  },
+  meniIcon: {
+    color: "black",
   },
 }));
 
@@ -36,7 +44,7 @@ function Navbar() {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
   return (
-    <div>
+    <div className={classes.wrapper}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <IconButton
@@ -46,12 +54,14 @@ function Navbar() {
             aria-label="menu"
             onClick={(e) => setToggle(true)}
           >
-            <MenuIcon />
+            <MenuIcon className={classes.meniIcon} />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Bricole
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" className={classes.meniIcon}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       {/* Drawer */}
