@@ -7,16 +7,14 @@ import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Grid from "@material-ui/core/Grid";
-
 const useStyles = makeStyles({
   root: {
     width: 500,
   },
   container: {
-    position: "absolute",
-    flex: 1,
     background: " black",
     display: "flex",
+
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -59,6 +57,7 @@ function Footer() {
           <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
         </BottomNavigation>
       </Grid>
+
       <Grid container direction="row" justify="center" alignItems="center">
         <BottomNavigation
           value={value}

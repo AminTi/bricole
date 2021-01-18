@@ -59,9 +59,7 @@ function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Bricole
           </Typography>
-          <Button color="inherit" className={classes.meniIcon}>
-            Login
-          </Button>
+          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
       {/* Drawer */}
