@@ -8,6 +8,7 @@ import { Grid } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import UserKit from "../Data/Userkit";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,9 +38,39 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateUser() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
+  const userKit = new UserKit();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data, e) => {
+    const firstname = data.firstname;
+    const lastname = data.lastname;
+    const company = data.company;
+    const email = data.email;
+    const adress = data.adress;
+    const mobile = data.mobile;
+    const postcode = data.post;
+    const password = data.password;
 
+    userKit.registerUsers(
+      firstname,
+      lastname,
+      company,
+      email,
+      adress,
+      mobile,
+      postcode,
+      password
+    );
+    console.log(firstname);
+    console.log(lastname);
+    console.log(company);
+    console.log(email);
+    console.log(adress);
+    console.log(mobile);
+    console.log(postcode);
+    console.log(password);
+
+    e.target.reset();
+  };
   return (
     <Container className={classes.container} maxWidth="sm">
       <Grid
@@ -54,24 +85,35 @@ export default function CreateUser() {
               className={classes.TextField}
               type="text"
               placeholder="FirstName"
-              name="firstName"
+              name="firstname"
               inputRef={register({ required: true, minLength: 2 })}
             />
-            {errors.firstName && (
+            {errors.firstname && (
               <div className={classes.error}> Firstname is required </div>
             )}
           </Box>
-
           <Box>
             <TextField
               className={classes.TextField}
               type="text"
               placeholder="LastName"
-              name="lastName"
+              name="lastname"
               inputRef={register({ required: true, minLength: 2 })}
             />
-            {errors.lastName && (
+            {errors.lastname && (
               <div className={classes.error}> Lastname is required </div>
+            )}
+          </Box>
+          <Box>
+            <TextField
+              className={classes.TextField}
+              type="text"
+              placeholder="Company"
+              name="company"
+              inputRef={register({ required: true, minLength: 2 })}
+            />
+            {errors.company && (
+              <div className={classes.error}> Company name is required </div>
             )}
           </Box>
 
