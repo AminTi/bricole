@@ -22,7 +22,6 @@ export default class {
       password,
     };
     return fetch(CreateUser, {
-      mode: "no-cors",
       method: "POST",
       headers: this.getHeader(),
       body: JSON.stringify(payload),

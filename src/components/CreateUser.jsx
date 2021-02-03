@@ -40,15 +40,15 @@ export default function CreateUser() {
   const { register, handleSubmit, errors } = useForm();
   const userKit = new UserKit();
 
-  const onSubmit = (data, e) => {
-    const firstname = data.firstname;
-    const lastname = data.lastname;
-    const company = data.company;
-    const email = data.email;
-    const adress = data.adress;
-    const mobile = data.mobile;
-    const postcode = data.post;
-    const password = data.password;
+  const onSubmit = (a, e) => {
+    const firstname = a.firstname;
+    const lastname = a.lastname;
+    const company = a.company;
+    const email = a.email;
+    const adress = a.adress;
+    const mobile = a.mobile;
+    const postcode = a.post;
+    const password = a.password;
 
     userKit.registerUsers(
       firstname,
