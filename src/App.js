@@ -8,6 +8,7 @@ import Footer from "./components/layout/Footer";
 import CreateUser from "./components/CreateUser";
 import Login from "./components/Login";
 import UserPage from "./components/UserPage";
+import SingUp from "./components/SingUp";
 
 const useStyles = makeStyles({
   container: {
@@ -22,8 +23,9 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/CreateUser" exact component={CreateUser} />
-        <Route path="/Login" exact component={Login} />
-        <Route path="/UserPage" exact component={UserPage} />
+        <Route path="/Login" component={Login} />
+        <Route path="/UserPage" component={UserPage} />
+        <Route path="/SingUp" component={SingUp} />
       </Switch>
       <Footer />
     </div>
