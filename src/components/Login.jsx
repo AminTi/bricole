@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   TextField: {
     display: "flex",
     flexDirection: "column",
+    padding: "10px 10px",
   },
   error: {
     color: "red",
@@ -42,6 +43,9 @@ function Login() {
           <Box>
             <TextField
               className={classes.TextField}
+              id="outlined-basic"
+              label="email"
+              variant="outlined"
               type="text"
               placeholder="Email"
               name="email"
@@ -57,6 +61,9 @@ function Login() {
           <Box>
             <TextField
               className={classes.TextField}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
               type="password"
               placeholder="Password"
               name="password"
