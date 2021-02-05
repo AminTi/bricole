@@ -1,11 +1,12 @@
-import React from "react";
-import { Container } from "@material-ui/core";
+import React, { useContext } from "react";
+import { useHistory } from "react-router";
+import { UserContext } from "../context/UserContextProvider";
+import { Container, Button } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { ViewColumnTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,11 +25,40 @@ const useStyles = makeStyles((theme) => ({
   error: {
     color: "red",
   },
+  btnBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "10px 10px",
+  },
 }));
 
 function Login() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
+  const history = useHistory();
+  const {
+    handelSingIn,
+    setEmail,
+    myPassword,
+    setMyPassword,
+    eml,
+    user,
+    emailError,
+    passwordError,
+  } = useContext(UserContext);
+
+  const onSubmit = (data, e) => {
+    if (user) {
+      handelSingIn();
+      console.log(emailError);
+      console.log(passwordError);
+      e.target.reset();
+      history.push("/UserPage");
+      console.log(user);
+    }
+  };
+
   return (
     <Container className={classes.container} maxWidth="sm">
       <h1> Bricole </h1>
@@ -39,9 +69,11 @@ function Login() {
         justify="space-between"
         alignItems="stretch"
       >
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
             <TextField
+              value={eml}
+              onChange={(e) => setEmail(e.target.value)}
               className={classes.TextField}
               id="outlined-basic"
               label="email"
@@ -60,6 +92,8 @@ function Login() {
           </Box>
           <Box>
             <TextField
+              value={myPassword}
+              onChange={(e) => setMyPassword(e.target.value)}
               className={classes.TextField}
               id="outlined-basic"
               label="Password"
@@ -74,6 +108,11 @@ function Login() {
                 Password is required (8 Caracters)
               </div>
             )}
+          </Box>
+          <Box className={classes.btnBox}>
+            <Button variant="contained" color="primary" type="submit">
+              SingIn
+            </Button>
           </Box>
         </form>
       </Grid>

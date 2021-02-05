@@ -9,6 +9,7 @@ import CreateUser from "./components/CreateUser";
 import Login from "./components/Login";
 import UserPage from "./components/UserPage";
 import SingUp from "./components/SingUp";
+import Dashboard from "./components/Dashboard";
 
 const useStyles = makeStyles({
   container: {
@@ -22,7 +23,8 @@ function App() {
     <div>
       <NavBar />
       <Switch>
-        <Route path="/CreateUser" exact component={CreateUser} />
+        <Route path="/" exact component={Dashboard} />
+        {/* <Route path="/CreateUser" component={CreateUser} /> */}
         <Route path="/Login" component={Login} />
         <Route path="/UserPage" component={UserPage} />
         <Route path="/SingUp" component={SingUp} />

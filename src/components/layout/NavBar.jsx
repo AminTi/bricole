@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
 import { Drawer as MUIDrawer, List } from "@material-ui/core";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import { useHistory } from "react-router";
 
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
@@ -15,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { UserContext } from "../../context/UserContextProvider";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
 
@@ -43,6 +46,20 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
+  const { user, handelLogOut } = useContext(UserContext);
+  const history = useHistory();
+
+  const ClickHandler = () => {
+    history.push("/login");
+  };
+
+  const singInSingOut = () => {
+    if (user) {
+      return <Button onClick={handelLogOut}>logout</Button>;
+    } else {
+      return <Button onClick={ClickHandler}>SingIn</Button>;
+    }
+  };
   return (
     <div className={classes.wrapper}>
       <AppBar position="static" className={classes.appbar}>
@@ -62,6 +79,7 @@ function Navbar() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+
       {/* Drawer */}
       <MUIDrawer open={toggle} anchor={"top"}>
         <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />
@@ -76,6 +94,7 @@ function Navbar() {
             </ListItem>
           ))}
         </List>
+        {singInSingOut()}
       </MUIDrawer>
     </div>
   );

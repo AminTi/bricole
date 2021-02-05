@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-
+import React, { useRef, useContext, useState } from "react";
+import { UserContext } from "../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 
@@ -8,6 +8,7 @@ import { Grid } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -39,21 +40,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SingUp() {
+  const [passwordCheck, setPasswordcheck] = useState("");
   const classes = useStyles();
   const { register, handleSubmit, errors, watch } = useForm();
+  const { handelSingUp, setEmail, myPassword, setMyPassword, eml } = useContext(
+    UserContext
+  );
+  const history = useHistory();
 
   const password = useRef({});
   password.current = watch("password", "");
 
-  const onSubmit = (a, e) => {
-    const email = a.email;
-    const password = a.password;
-
-    console.log(email);
-    console.log(password);
-
-    e.target.reset();
+  const onSubmit = (data, e) => {
+    if (myPassword == data.password) {
+      handelSingUp();
+      e.target.reset();
+      history.push("/Login");
+    }
   };
+
   return (
     <div>
       <Container className={classes.container} maxWidth="sm">
@@ -66,6 +71,8 @@ function SingUp() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box className={classes.box}>
               <TextField
+                value={eml}
+                onChange={(e) => setEmail(e.target.value)}
                 className={classes.TextField}
                 id="outlined-basic"
                 label="email"
@@ -96,7 +103,7 @@ function SingUp() {
                 name="password"
                 inputRef={register({ required: true, minLength: 8 })}
               />
-              {errors.password && (
+              {errors.passwordpass && (
                 <div className={classes.error}>
                   {" "}
                   Password is required (8 Caracters)
@@ -106,8 +113,8 @@ function SingUp() {
             <Box className={classes.box}>
               <TextField
                 className={classes.TextField}
-                id="outlined-basic"
-                label="Password"
+                id="inputPassword"
+                label="Confrime Password"
                 variant="outlined"
                 type="password"
                 placeholder="Password"
@@ -116,6 +123,8 @@ function SingUp() {
                   validate: (value) =>
                     value === password.current || "The passwords do not match",
                 })}
+                value={myPassword}
+                onChange={(e) => setMyPassword(e.target.value)}
               />
               {errors.password_repeat && (
                 <div className={classes.error}>
