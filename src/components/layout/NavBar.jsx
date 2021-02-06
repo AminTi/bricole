@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { Drawer as MUIDrawer, List } from "@material-ui/core";
 
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: "#ffa600",
+    fontWeight: "bold",
+    fontSize: "30px",
   },
   appbar: {
     background: "white",
@@ -49,55 +53,93 @@ function Navbar() {
   const { user, handelLogOut } = useContext(UserContext);
   const history = useHistory();
 
-  const ClickHandler = () => {
-    history.push("/login");
+  const logOut = () => {
+    handelLogOut();
+    console.log(user);
+  };
+
+  const test = () => {
+    console.log(user);
   };
 
   const singInSingOut = () => {
     if (user) {
-      return <Button onClick={handelLogOut}>logout</Button>;
+      return (
+        <Button onClick={logOut}>
+          <Link to="/Dashboard"> LogOut </Link>
+        </Button>
+      );
     } else {
-      return <Button onClick={ClickHandler}>SingIn</Button>;
+      return (
+        <Button>
+          <Link to="/login" onClick={test}>
+            {" "}
+            SingIn
+          </Link>
+        </Button>
+      );
     }
   };
-  return (
-    <div className={classes.wrapper}>
-      <AppBar position="static" className={classes.appbar}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={(e) => setToggle(true)}
-          >
-            <MenuIcon className={classes.meniIcon} />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Bricole
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
 
-      {/* Drawer */}
-      <MUIDrawer open={toggle} anchor={"top"}>
-        <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />
-        <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+  const NavBar = () => {
+    if (user) {
+      return (
+        <div className={classes.wrapper}>
+          <AppBar position="static" className={classes.appbar}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={(e) => setToggle(true)}
+              >
+                <MenuIcon className={classes.meniIcon} />
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                Bricole
+              </Typography>
+              <Button color="inherit">Login</Button>
+            </Toolbar>
+          </AppBar>
 
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        {singInSingOut()}
-      </MUIDrawer>
-    </div>
-  );
+          {/* Drawer */}
+          <MUIDrawer open={toggle} anchor={"top"}>
+            <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />
+            <List>
+              {["Inbox", "Starred", "Send email", "Drafts"].map(
+                (text, index) => (
+                  <ListItem button key={text}>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+
+                    <ListItemText primary={text} />
+                  </ListItem>
+                )
+              )}
+            </List>
+            {singInSingOut()}
+          </MUIDrawer>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.wrapper}>
+          <AppBar position="static" className={classes.appbar}>
+            <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                Bricole
+              </Typography>
+              {singInSingOut()}
+            </Toolbar>
+          </AppBar>
+        </div>
+      );
+    }
+  };
+
+  return <div>{NavBar()}</div>;
 }
 
 export default Navbar;

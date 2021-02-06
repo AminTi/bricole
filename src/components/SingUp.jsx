@@ -55,7 +55,7 @@ function SingUp() {
     if (myPassword == data.password) {
       handelSingUp();
       e.target.reset();
-      history.push("/Login");
+      history.push("/UserPage");
     }
   };
 

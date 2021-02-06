@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+
 import { UserContext } from "../context/UserContextProvider";
 import { Container, Button } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
@@ -20,16 +22,21 @@ const useStyles = makeStyles((theme) => ({
   TextField: {
     display: "flex",
     flexDirection: "column",
-    padding: "10px 10px",
+    padding: "10px 5px",
   },
   error: {
     color: "red",
+    padding: "5px 5px",
   },
   btnBox: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "column",
     padding: "10px 10px",
+  },
+  btnLink: {
+    padding: "5px 5px",
   },
 }));
 
@@ -49,13 +56,11 @@ function Login() {
   } = useContext(UserContext);
 
   const onSubmit = (data, e) => {
+    console.log(myPassword);
+    handelSingIn();
     if (user) {
-      handelSingIn();
-      console.log(emailError);
-      console.log(passwordError);
-      e.target.reset();
       history.push("/UserPage");
-      console.log(user);
+      e.target.reset();
     }
   };
 
@@ -101,7 +106,7 @@ function Login() {
               type="password"
               placeholder="Password"
               name="password"
-              inputRef={register({ required: true, minLength: 8 })}
+              inputRef={register({ required: true, minLength: 7 })}
             />
             {errors.password && (
               <div className={classes.error}>
@@ -113,6 +118,9 @@ function Login() {
             <Button variant="contained" color="primary" type="submit">
               SingIn
             </Button>
+            <Link to="SingUp" className={classes.btnLink}>
+              Create your Bricole Account{" "}
+            </Link>
           </Box>
         </form>
       </Grid>

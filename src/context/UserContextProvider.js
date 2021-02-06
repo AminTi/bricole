@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import fire from "../components/config/fire";
+import { useHistory } from "react-router";
 
 export const UserContext = createContext({});
 
@@ -10,6 +11,8 @@ function UserContextProvider({ children }) {
 
   const [emailError, setEmailErr] = useState("");
   const [passwordError, setpasswordErr] = useState("");
+
+  const history = useHistory();
 
   const handelSingUp = () =>
     fire
@@ -39,12 +42,13 @@ function UserContextProvider({ children }) {
           case "auth/user-disabled":
           case "auth/user-not-found":
             setEmailErr(err.message);
-            console.log(err.message);
+            return alert(err.message);
+
             break;
           case "auth/wrong-password":
           case "auth/wrong-password":
             setpasswordErr(err.message);
-            console.log(err.message);
+            return alert(err.message);
             break;
         }
       });
