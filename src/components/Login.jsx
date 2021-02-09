@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import { UserContext } from "../context/UserContextProvider";
 import { Container, Button } from "@material-ui/core";
@@ -51,18 +51,23 @@ function Login() {
     setMyPassword,
     eml,
     user,
+    userCheck,
     emailError,
     passwordError,
+    authListnner,
+    CreateCollection,
   } = useContext(UserContext);
 
   const onSubmit = (data, e) => {
-    console.log(myPassword);
     handelSingIn();
+    e.target.reset();
+  };
+
+  useEffect(() => {
     if (user) {
       history.push("/UserPage");
-      e.target.reset();
-    }
-  };
+    } else console.log(passwordError);
+  }, [onSubmit]);
 
   return (
     <Container className={classes.container} maxWidth="sm">

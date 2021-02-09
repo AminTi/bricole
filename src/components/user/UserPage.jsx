@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import Modal from "@material-ui/core/Modal";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     height: "100vh",
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 5px",
   },
   close: {
-    color: "blue",
+    color: "black",
     float: "right",
     padding: "10px 10px",
     fontSize: "50px",
@@ -39,13 +41,21 @@ const useStyles = makeStyles((theme) => ({
 function UserPage() {
   const classes = useStyles();
   const [handleOpen, SethandleOpen] = useState(null);
+  const {
+    user,
 
+    getCollection,
+  } = useContext(UserContext);
+
+  const clickHandler = () => {
+    getCollection();
+  };
   return (
     <Container className={classes.container} maxWidth="m">
       <Container maxWidth="xs" className={classes.containerFab}>
         <Fab
           type="button"
-          onClick={(e) => SethandleOpen(true)}
+          onClick={((e) => SethandleOpen(true), clickHandler)}
           className={classes.fab}
         >
           <AddCircleIcon></AddCircleIcon>
@@ -58,26 +68,21 @@ function UserPage() {
             className={classes.close}
             onClick={(e) => SethandleOpen(false)}
           />
-          {console.log(handleOpen)}
-          <form className={classes.root} noValidate autoComplete="off">
+
+          <form className={classes.root} noValidate>
             <TextField
               className={classes.TextField}
               id="outlined-basic"
-              label="Outlined"
+              label="Titel"
               variant="outlined"
             />
             <TextField
               className={classes.TextField}
               id="outlined-basic"
-              label="Outlined"
+              label="Price"
               variant="outlined"
             />
-            <TextField
-              className={classes.TextField}
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-            />
+
             <TextField
               className={classes.TextField}
               id="outlined-basic"

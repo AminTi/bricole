@@ -1,5 +1,5 @@
 import firebase from "firebase";
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyCQZ7yX00ZKTgEygYaVVyDRFPrGuHuR9cU",
   authDomain: "fir-rest-exjobb.firebaseapp.com",
   projectId: "fir-rest-exjobb",

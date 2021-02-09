@@ -6,13 +6,13 @@ export const UserContext = createContext({});
 
 function UserContextProvider({ children }) {
   const [user, setUser] = useState("");
+  const [userCheck, setUserCheck] = useState("");
   const [eml, setEmail] = useState("");
   const [myPassword, setMyPassword] = useState("");
+  const [profil, setprofil] = useState({});
 
   const [emailError, setEmailErr] = useState("");
   const [passwordError, setpasswordErr] = useState("");
-
-  const history = useHistory();
 
   const handelSingUp = () =>
     fire
@@ -57,6 +57,24 @@ function UserContextProvider({ children }) {
     fire.auth().signOut();
   };
 
+  const CreateCollection = () => {
+    fire.firestore().collection("users").doc(user.uid).set(profil);
+  };
+
+  const getCollection = () => {
+    const id = user && user.uid.toString();
+    //"2rCYm7tlPiZtvpcxSrtQEzEPimp1"
+    console.log(id);
+    fire
+      .firestore()
+      .collection("users")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        console.log(doc.data());
+      });
+  };
+
   const authListnner = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -70,6 +88,7 @@ function UserContextProvider({ children }) {
   useEffect(() => {
     authListnner();
   }, []);
+
   return (
     <UserContext.Provider
       value={{
@@ -82,6 +101,11 @@ function UserContextProvider({ children }) {
         handelSingUp,
         handelSingIn,
         handelLogOut,
+        authListnner,
+        CreateCollection,
+        profil,
+        setprofil,
+        getCollection,
       }}
     >
       {children}

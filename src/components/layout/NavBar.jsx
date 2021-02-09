@@ -8,7 +8,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { useHistory } from "react-router";
 
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,7 +20,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { UserContext } from "../../context/UserContextProvider";
 
 import ArrowBackTwoToneIcon from "@material-ui/icons/ArrowBackTwoTone";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ContactsIcon from "@material-ui/icons/Contacts";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import HomeIcon from "@material-ui/icons/Home";
 
+import InfoIcon from "@material-ui/icons/Info";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -45,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   meniIcon: {
     color: "black",
   },
+  link: {
+    textDecoration: " none",
+  },
 }));
 
 function Navbar() {
@@ -53,12 +60,53 @@ function Navbar() {
   const { user, handelLogOut } = useContext(UserContext);
   const history = useHistory();
 
+  const ItemList = [
+    {
+      text: (
+        <Link to="/" className={classes.link}>
+          Home
+        </Link>
+      ),
+      icon: <DashboardIcon />,
+    },
+
+    {
+      text: (
+        <Link to="profil" className={classes.link}>
+          Profil
+        </Link>
+      ),
+      icon: <AccountCircleIcon />,
+    },
+    {
+      text: (
+        <Link to="/UserPage" className={classes.link}>
+          Dashboard
+        </Link>
+      ),
+      icon: <DashboardIcon />,
+    },
+
+    {
+      text: "Inbox",
+      icon: <MailIcon />,
+    },
+    {
+      text: "Contacts",
+      icon: <ContactsIcon />,
+    },
+    {
+      text: "AboutUs",
+      icon: <InfoIcon />,
+    },
+    {
+      text: "Back",
+      icon: <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />,
+    },
+  ];
+
   const logOut = () => {
     handelLogOut();
-    console.log(user);
-  };
-
-  const test = () => {
     console.log(user);
   };
 
@@ -66,16 +114,13 @@ function Navbar() {
     if (user) {
       return (
         <Button onClick={logOut}>
-          <Link to="/Dashboard"> LogOut </Link>
+          <Link to="/"> Log out </Link>
         </Button>
       );
     } else {
       return (
         <Button>
-          <Link to="/login" onClick={test}>
-            {" "}
-            SingIn
-          </Link>
+          <Link to="/login"> Sign In</Link>
         </Button>
       );
     }
@@ -99,27 +144,25 @@ function Navbar() {
               <Typography variant="h6" className={classes.title}>
                 Bricole
               </Typography>
+
               <Button color="inherit">Login</Button>
+              {singInSingOut()}
             </Toolbar>
           </AppBar>
 
           {/* Drawer */}
           <MUIDrawer open={toggle} anchor={"top"}>
-            <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />
             <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map(
-                (text, index) => (
+              {ItemList.map((item, index) => {
+                const { text, icon } = item;
+                return (
                   <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
                     <ListItemText primary={text} />
                   </ListItem>
-                )
-              )}
+                );
+              })}
             </List>
-            {singInSingOut()}
           </MUIDrawer>
         </div>
       );
@@ -143,3 +186,11 @@ function Navbar() {
 }
 
 export default Navbar;
+
+{
+  /* <InboxIcon />
+                    <AccountCircleIcon />
+                    <MailIcon />
+                    <ContactsIcon />
+                    <InfoIcon /> */
+}
