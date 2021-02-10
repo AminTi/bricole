@@ -43,14 +43,15 @@ function UserPage() {
   const classes = useStyles();
   const [handleOpen, SethandleOpen] = useState(null);
   const { register, handleSubmit, errors } = useForm();
-  const { user, getCollection } = useContext(UserContext);
+  const { user, getCollection, getAd } = useContext(UserContext);
 
   const clickHandler = () => {
     SethandleOpen(true);
   };
 
   const onSubmit = (data, e) => {
-    console.log(data);
+    getAd(data);
+    getCollection();
   };
 
   return (
@@ -77,28 +78,36 @@ function UserPage() {
               className={classes.TextField}
               id="outlined-basic"
               label="Titel"
+              name="titel"
               variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
             />
             <TextField
               className={classes.TextField}
               id="outlined-basic"
               label="Price"
+              name="price"
               variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
             />
             <TextField
               className={classes.TextField}
               id="outlined-basic"
               type="file"
+              name="image"
               variant="outlined"
+              inputRef={register({ required: true })}
             />
 
             <TextField
               className={classes.TextField}
               id="outlined-basic"
               label="Description  "
+              name="description"
               multiline
               rows={8}
               variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
             />
 
             <Box className={classes.containerFab}>

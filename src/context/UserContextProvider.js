@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import fire from "../components/config/fire";
 import { useHistory } from "react-router";
+import { FilterOutlined } from "@material-ui/icons";
 
 export const UserContext = createContext({});
 
@@ -86,6 +87,26 @@ function UserContextProvider({ children }) {
     }
   };
 
+  const getAd = async (data) => {
+    const file = data.image[0];
+    const storagRef = fire.storage().ref();
+    const fileRef = storagRef.child(data.image[0].name);
+    await fileRef.put(data.image[0]);
+    const fileUrl = await fileRef.getDownloadURL();
+
+    const payload = {
+      titel: data.titel,
+      Price: data.price,
+      avatar: fileUrl,
+      description: data.description,
+    };
+
+    fire
+      .firestore()
+      .collection("advertising")
+      .doc(user.uid)
+      .set(payload && { payload });
+  };
   const authListnner = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -120,6 +141,7 @@ function UserContextProvider({ children }) {
         getCollection,
         profilData,
         Changes,
+        getAd,
       }}
     >
       {children}
