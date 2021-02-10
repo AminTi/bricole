@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const classes = useStyles();
   const [toggle, setToggle] = useState(false);
-  const { user, handelLogOut } = useContext(UserContext);
+  const { user, handelLogOut, getCollection, profilData } = useContext(
+    UserContext
+  );
   const history = useHistory();
 
   const ItemList = [
@@ -72,7 +74,11 @@ function Navbar() {
 
     {
       text: (
-        <Link to="profil" className={classes.link}>
+        <Link
+          to="profilDisabled"
+          className={classes.link}
+          onClick={getCollection}
+        >
           Profil
         </Link>
       ),
@@ -107,7 +113,6 @@ function Navbar() {
 
   const logOut = () => {
     handelLogOut();
-    console.log(user);
   };
 
   const singInSingOut = () => {

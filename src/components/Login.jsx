@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
@@ -44,6 +44,7 @@ function Login() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
+
   const {
     handelSingIn,
     setEmail,
@@ -55,18 +56,29 @@ function Login() {
     emailError,
     passwordError,
     authListnner,
+    getCollection,
     CreateCollection,
+    profilData,
+    Changes,
   } = useContext(UserContext);
 
   const onSubmit = (data, e) => {
     handelSingIn();
-    e.target.reset();
+    getCollection();
   };
 
   useEffect(() => {
+    Changes();
     if (user) {
-      history.push("/UserPage");
-    } else console.log(passwordError);
+      if (user.uid) {
+        console.log(user.uid);
+        if (profilData.city) {
+          history.push("/UserPage");
+        } else {
+          history.push("/profil");
+        }
+      }
+    }
   }, [onSubmit]);
 
   return (

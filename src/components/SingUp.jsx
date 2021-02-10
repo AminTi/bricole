@@ -43,9 +43,14 @@ function SingUp() {
   const [passwordCheck, setPasswordcheck] = useState("");
   const classes = useStyles();
   const { register, handleSubmit, errors, watch } = useForm();
-  const { handelSingUp, setEmail, myPassword, setMyPassword, eml } = useContext(
-    UserContext
-  );
+  const {
+    handelSingUp,
+    setEmail,
+    myPassword,
+    setMyPassword,
+    eml,
+    user,
+  } = useContext(UserContext);
   const history = useHistory();
 
   const password = useRef({});
@@ -55,7 +60,7 @@ function SingUp() {
     if (myPassword == data.password) {
       handelSingUp();
       e.target.reset();
-      history.push("/UserPage");
+      history.push("/Profil");
     }
   };
 

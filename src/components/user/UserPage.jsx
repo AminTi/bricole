@@ -49,15 +49,12 @@ function UserPage() {
 
   const clickHandler = () => {
     getCollection();
+    SethandleOpen(true);
   };
   return (
     <Container className={classes.container} maxWidth="m">
       <Container maxWidth="xs" className={classes.containerFab}>
-        <Fab
-          type="button"
-          onClick={((e) => SethandleOpen(true), clickHandler)}
-          className={classes.fab}
-        >
+        <Fab type="button" onClick={clickHandler} className={classes.fab}>
           <AddCircleIcon></AddCircleIcon>
         </Fab>
       </Container>

@@ -10,6 +10,7 @@ function UserContextProvider({ children }) {
   const [eml, setEmail] = useState("");
   const [myPassword, setMyPassword] = useState("");
   const [profil, setprofil] = useState({});
+  const [profilData, setprofilData] = useState("");
 
   const [emailError, setEmailErr] = useState("");
   const [passwordError, setpasswordErr] = useState("");
@@ -57,22 +58,42 @@ function UserContextProvider({ children }) {
     fire.auth().signOut();
   };
 
-  const CreateCollection = () => {
-    fire.firestore().collection("users").doc(user.uid).set(profil);
+  const CreateCollection = (data) => {
+    if (data) {
+      fire
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
+        .set(data && { data });
+    }
   };
 
-  const getCollection = () => {
-    const id = user && user.uid.toString();
-    //"2rCYm7tlPiZtvpcxSrtQEzEPimp1"
-    console.log(id);
-    fire
-      .firestore()
-      .collection("users")
-      .doc(id)
-      .get()
-      .then((doc) => {
-        console.log(doc.data());
+  const getCollection = (data) => {
+    if (user) {
+      data &&
+        fire
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            setprofilData(doc.data());
+
+            // console.log(profilData);
+            // console.log(doc.data());
+          });
+    }
+  };
+
+  const Changes = () => {
+    if (user) {
+      let documentRef = fire.firestore().doc(1);
+      documentRef.get().then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          console.log(`Document found with name '${documentSnapshot.id}'`);
+        }
       });
+    }
   };
 
   const authListnner = () => {
@@ -106,6 +127,8 @@ function UserContextProvider({ children }) {
         profil,
         setprofil,
         getCollection,
+        profilData,
+        Changes,
       }}
     >
       {children}

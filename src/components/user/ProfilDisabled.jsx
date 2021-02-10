@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid, TextField, Button, Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import InputLabel from "@material-ui/core/InputLabel";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     height: "100vh",
@@ -31,34 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Profil() {
+function ProfilDisabled() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const {
-    user,
-    CreateCollection,
-    profil,
-    setprofil,
-    setprofilData,
-    getCollection,
-    profilData,
-  } = useContext(UserContext);
-
+  const { profilData } = useContext(UserContext);
   const history = useHistory();
 
-  const onSubmit = (data, e) => {
-    CreateCollection(data);
-    getCollection(data);
-    setprofilData(data);
-    history.push("/UserPage");
+  console.log(profilData);
+  const ClickHandler = () => {
+    history.push("/profil");
   };
-
-  // useEffect(() => {
-  //   if (user) {
-  //     CreateCollection();
-  //   }
-  // }, [onSubmit]);
-
   return (
     <Container className={classes.container} maxWidth="sm">
       <Grid
@@ -67,12 +51,14 @@ function Profil() {
         justify="space-between"
         alignItems="stretch"
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.firstname}
               className={classes.TextField}
-              id="outlined-basic"
               label="Firstname"
+              id="outlined-basic"
               variant="outlined"
               type="text"
               placeholder="Firstname"
@@ -84,7 +70,9 @@ function Profil() {
             )}
           </Box>
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.lastname}
               className={classes.TextField}
               id="outlined-basic"
               label="Lastname"
@@ -99,10 +87,12 @@ function Profil() {
             )}
           </Box>
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.Profession}
+              label="Profession"
               className={classes.TextField}
               id="outlined-basic"
-              label="Profession"
               variant="outlined"
               type="text"
               placeholder="Profession"
@@ -115,10 +105,12 @@ function Profil() {
           </Box>
 
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.Company}
+              label="Company"
               className={classes.TextField}
               id="outlined-basic"
-              label="Company"
               variant="outlined"
               type="text"
               placeholder="Company"
@@ -130,10 +122,12 @@ function Profil() {
             )}
           </Box>
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.adress}
+              label="Adress"
               className={classes.TextField}
               id="outlined-basic"
-              label="adress"
               variant="outlined"
               type="text"
               placeholder="Adress"
@@ -145,10 +139,12 @@ function Profil() {
             )}
           </Box>
           <Box>
+            <InputLabel />
             <TextField
+              value={profilData && profilData.data.city}
+              label="City"
               className={classes.TextField}
               id="outlined-basic"
-              label="City"
               variant="outlined"
               type="text"
               placeholder="City"
@@ -160,8 +156,8 @@ function Profil() {
             )}
           </Box>
           <Box className={classes.btnBox}>
-            <Button variant="contained" color="primary" type="submit">
-              Save
+            <Button variant="contained" color="primary" onClick={ClickHandler}>
+              Update
             </Button>
           </Box>
         </form>
@@ -170,4 +166,4 @@ function Profil() {
   );
 }
 
-export default Profil;
+export default ProfilDisabled;
