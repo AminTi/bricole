@@ -36,13 +36,14 @@ const useStyles = makeStyles((theme) => ({
 function ProfilDisabled() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const { profilData } = useContext(UserContext);
+  const { profilData, getCollection, user } = useContext(UserContext);
+  const [test, set] = useState("");
   const history = useHistory();
 
-  console.log(profilData);
   const ClickHandler = () => {
     history.push("/profil");
   };
+
   return (
     <Container className={classes.container} maxWidth="sm">
       <Grid

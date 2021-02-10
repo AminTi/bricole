@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
@@ -41,16 +42,17 @@ const useStyles = makeStyles((theme) => ({
 function UserPage() {
   const classes = useStyles();
   const [handleOpen, SethandleOpen] = useState(null);
-  const {
-    user,
-
-    getCollection,
-  } = useContext(UserContext);
+  const { register, handleSubmit, errors } = useForm();
+  const { user, getCollection } = useContext(UserContext);
 
   const clickHandler = () => {
-    getCollection();
     SethandleOpen(true);
   };
+
+  const onSubmit = (data, e) => {
+    console.log(data);
+  };
+
   return (
     <Container className={classes.container} maxWidth="m">
       <Container maxWidth="xs" className={classes.containerFab}>
@@ -66,7 +68,11 @@ function UserPage() {
             onClick={(e) => SethandleOpen(false)}
           />
 
-          <form className={classes.root} noValidate>
+          <form
+            className={classes.root}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <TextField
               className={classes.TextField}
               id="outlined-basic"
@@ -79,6 +85,12 @@ function UserPage() {
               label="Price"
               variant="outlined"
             />
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
+              type="file"
+              variant="outlined"
+            />
 
             <TextField
               className={classes.TextField}
@@ -88,8 +100,9 @@ function UserPage() {
               rows={8}
               variant="outlined"
             />
+
             <Box className={classes.containerFab}>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" type="submit">
                 Send
               </Button>
             </Box>

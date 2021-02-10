@@ -191,11 +191,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-{
-  /* <InboxIcon />
-                    <AccountCircleIcon />
-                    <MailIcon />
-                    <ContactsIcon />
-                    <InfoIcon /> */
-}

@@ -6,14 +6,12 @@ export const UserContext = createContext({});
 
 function UserContextProvider({ children }) {
   const [user, setUser] = useState("");
-  const [userCheck, setUserCheck] = useState(false);
   const [eml, setEmail] = useState("");
   const [myPassword, setMyPassword] = useState("");
   const [profil, setprofil] = useState({});
   const [profilData, setprofilData] = useState("");
 
-  const [emailError, setEmailErr] = useState("");
-  const [passwordError, setpasswordErr] = useState("");
+  const history = useHistory();
 
   const handelSingUp = () =>
     fire
@@ -23,12 +21,10 @@ function UserContextProvider({ children }) {
         switch (err.code) {
           case "auth/email.already-in-use":
           case "auth-invalid.email":
-            setEmailErr(err.message);
-            console.log(err.message);
+            alert(err.message);
             break;
           case "auth/weak-password":
-            setpasswordErr(err.message);
-            console.log(err.message);
+            alert(err.message);
             break;
         }
       });
@@ -42,13 +38,11 @@ function UserContextProvider({ children }) {
           case "auth/invalid-email":
           case "auth/user-disabled":
           case "auth/user-not-found":
-            setEmailErr(err.message);
             return alert(err.message);
 
             break;
           case "auth/wrong-password":
           case "auth/wrong-password":
-            setpasswordErr(err.message);
             return alert(err.message);
             break;
         }
@@ -68,20 +62,16 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const getCollection = (data) => {
+  const getCollection = async () => {
     if (user) {
-      data &&
-        fire
-          .firestore()
-          .collection("users")
-          .doc(user.uid)
-          .get()
-          .then((doc) => {
-            setprofilData(doc.data());
-
-            // console.log(profilData);
-            // console.log(doc.data());
-          });
+      await fire
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          return setprofilData(doc.data());
+        });
     }
   };
 
@@ -90,8 +80,7 @@ function UserContextProvider({ children }) {
       let documentRef = fire.firestore().collection("users").doc(user.uid);
       documentRef.get().then((documentSnapshot) => {
         if (documentSnapshot.exists) {
-          console.log(`Document found with name '${documentSnapshot.id}'`);
-          setUserCheck(true);
+          history.push("/UserPage");
         }
       });
     }
@@ -131,7 +120,6 @@ function UserContextProvider({ children }) {
         getCollection,
         profilData,
         Changes,
-        userCheck,
       }}
     >
       {children}

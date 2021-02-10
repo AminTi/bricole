@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const history = useHistory();
 
   const {
     handelSingIn,
@@ -51,15 +50,6 @@ function Login() {
     myPassword,
     setMyPassword,
     eml,
-    user,
-    userCheck,
-
-    emailError,
-    passwordError,
-    authListnner,
-    getCollection,
-    CreateCollection,
-    profilData,
     Changes,
   } = useContext(UserContext);
 
@@ -69,13 +59,6 @@ function Login() {
 
   useEffect(() => {
     Changes();
-    if (user) {
-      if (userCheck) {
-        history.push("/UserPage");
-      } else {
-        history.push("/profil");
-      }
-    }
   }, [onSubmit]);
 
   return (
