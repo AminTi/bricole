@@ -47,10 +47,11 @@ function Profil() {
   const history = useHistory();
 
   const onSubmit = (data, e) => {
+    console.log(data);
     CreateCollection(data);
     getCollection(data);
-    setprofilData(data);
     history.push("/UserPage");
+    e.target.reset();
   };
 
   // useEffect(() => {

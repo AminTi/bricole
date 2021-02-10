@@ -6,7 +6,7 @@ export const UserContext = createContext({});
 
 function UserContextProvider({ children }) {
   const [user, setUser] = useState("");
-  const [userCheck, setUserCheck] = useState("");
+  const [userCheck, setUserCheck] = useState(false);
   const [eml, setEmail] = useState("");
   const [myPassword, setMyPassword] = useState("");
   const [profil, setprofil] = useState({});
@@ -87,10 +87,11 @@ function UserContextProvider({ children }) {
 
   const Changes = () => {
     if (user) {
-      let documentRef = fire.firestore().doc(1);
+      let documentRef = fire.firestore().collection("users").doc(user.uid);
       documentRef.get().then((documentSnapshot) => {
         if (documentSnapshot.exists) {
           console.log(`Document found with name '${documentSnapshot.id}'`);
+          setUserCheck(true);
         }
       });
     }
@@ -104,6 +105,7 @@ function UserContextProvider({ children }) {
         setUser(user);
       }
     });
+    Changes();
   };
 
   useEffect(() => {
@@ -129,6 +131,7 @@ function UserContextProvider({ children }) {
         getCollection,
         profilData,
         Changes,
+        userCheck,
       }}
     >
       {children}

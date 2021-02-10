@@ -53,6 +53,7 @@ function Login() {
     eml,
     user,
     userCheck,
+
     emailError,
     passwordError,
     authListnner,
@@ -64,19 +65,15 @@ function Login() {
 
   const onSubmit = (data, e) => {
     handelSingIn();
-    getCollection();
   };
 
   useEffect(() => {
     Changes();
     if (user) {
-      if (user.uid) {
-        console.log(user.uid);
-        if (profilData.city) {
-          history.push("/UserPage");
-        } else {
-          history.push("/profil");
-        }
+      if (userCheck) {
+        history.push("/UserPage");
+      } else {
+        history.push("/profil");
       }
     }
   }, [onSubmit]);
