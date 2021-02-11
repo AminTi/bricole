@@ -12,8 +12,9 @@ function UserContextProvider({ children }) {
   const [profil, setprofil] = useState({});
   const [profilData, setprofilData] = useState("");
   const [ads, setUserAds] = useState([]);
+  const [userCollection, setuserCollection] = useState([]);
   let tempDoc = [];
-
+  let tempDocUsers = [];
   const history = useHistory();
 
   const handelSingUp = () =>
@@ -57,11 +58,16 @@ function UserContextProvider({ children }) {
 
   const CreateCollection = (data) => {
     if (data) {
-      fire
-        .firestore()
-        .collection("users")
-        .doc(user.uid)
-        .set(data && { data });
+      const newdata = {
+        Company: data.Company,
+        Profession: data.Profession,
+        adress: data.adress,
+        city: data.city,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        id: user.uid,
+      };
+      fire.firestore().collection("users").doc(user.uid).set({ newdata });
     }
   };
 
@@ -104,6 +110,7 @@ function UserContextProvider({ children }) {
 
     await fire.firestore().collection("advertising").add({ payload });
     await getDataAds();
+    await getAllUsers();
   };
 
   const getDataAds = async () => {
@@ -118,6 +125,20 @@ function UserContextProvider({ children }) {
         });
         setUserAds(tempDoc);
       });
+  };
+
+  const getAllUsers = async () => {
+    await fire
+      .firestore()
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          tempDocUsers.push({ ...doc.data().newdata });
+        });
+        setuserCollection(tempDocUsers);
+      });
+    console.log(tempDocUsers);
   };
 
   const authListnner = () => {
@@ -157,7 +178,10 @@ function UserContextProvider({ children }) {
         profilData,
         Changes,
         getAd,
+        getAllUsers,
         getDataAds,
+        tempDocUsers,
+        userCollection,
       }}
     >
       {children}

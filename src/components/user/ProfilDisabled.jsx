@@ -56,7 +56,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.firstname}
+              value={profilData && profilData.newdata.firstname}
               className={classes.TextField}
               label="Firstname"
               id="outlined-basic"
@@ -73,7 +73,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.lastname}
+              value={profilData && profilData.newdata.lastname}
               className={classes.TextField}
               id="outlined-basic"
               label="Lastname"
@@ -90,7 +90,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.Profession}
+              value={profilData && profilData.newdata.Profession}
               label="Profession"
               className={classes.TextField}
               id="outlined-basic"
@@ -108,7 +108,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.Company}
+              value={profilData && profilData.newdata.Company}
               label="Company"
               className={classes.TextField}
               id="outlined-basic"
@@ -125,7 +125,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.adress}
+              value={profilData && profilData.newdata.adress}
               label="Adress"
               className={classes.TextField}
               id="outlined-basic"
@@ -142,7 +142,7 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
-              value={profilData && profilData.data.city}
+              value={profilData && profilData.newdata.city}
               label="City"
               className={classes.TextField}
               id="outlined-basic"

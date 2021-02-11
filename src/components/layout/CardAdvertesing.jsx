@@ -58,14 +58,10 @@ function CardAdvertesing({ currentUserAds }) {
     setExpanded(!expanded);
   };
 
-  useEffect(() => {
-    if (window.location.reload) {
-      getCollection();
-    }
-  }, []);
-  console.log(profilData);
+  useEffect(() => {}, []);
+  // console.log(profilData);
 
-  console.log(currentUserAds);
+  // console.log(currentUserAds);
 
   return (
     <Container className={classes.wrapper} maxWidth="m">
@@ -75,7 +71,7 @@ function CardAdvertesing({ currentUserAds }) {
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe" className={classes.avatar}>
-                  R
+                  {/* .slice(0,1); */}
                 </Avatar>
               }
               action={

@@ -10,7 +10,8 @@ import CardAdvertesing from "../layout/CardAdvertesing";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    // height: "100vh",
+    minHeight: "100vh",
+    height: "100vh",
   },
   containerFab: {
     display: "flex",
@@ -44,9 +45,15 @@ function UserPage() {
   const classes = useStyles();
   const [handleOpen, SethandleOpen] = useState(null);
   const { register, handleSubmit, errors } = useForm();
-  const { user, getAd, getDataAds, ads, getCollection } = useContext(
-    UserContext
-  );
+  const {
+    user,
+    getAd,
+    getDataAds,
+    ads,
+    getCollection,
+    getAllUsers,
+    userCollection,
+  } = useContext(UserContext);
 
   const clickHandler = () => {
     SethandleOpen(true);
@@ -58,7 +65,7 @@ function UserPage() {
   };
 
   useEffect(() => {
-    getCollection();
+    getAllUsers();
     getDataAds();
   }, []);
 
@@ -66,6 +73,12 @@ function UserPage() {
   const currentUser = ads.filter((elm) => {
     return elm.id == currentUserid;
   });
+
+  const allUsers = userCollection.filter((elm) => {
+    return elm.id == currentUserid;
+  });
+
+  console.log(userCollection);
 
   return (
     <Container className={classes.container} maxWidth="m">

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     width: 500,
   },
   container: {
-    background: " black",
+    background: " #000000",
     display: "flex",
 
     flexDirection: "column",
