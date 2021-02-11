@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import fire from "../components/config/fire";
 import { useHistory } from "react-router";
-import { FilterOutlined } from "@material-ui/icons";
+import { ContactSupportOutlined, FilterOutlined } from "@material-ui/icons";
 
 export const UserContext = createContext({});
 
@@ -11,6 +11,8 @@ function UserContextProvider({ children }) {
   const [myPassword, setMyPassword] = useState("");
   const [profil, setprofil] = useState({});
   const [profilData, setprofilData] = useState("");
+  const [ads, setUserAds] = useState([]);
+  let tempDoc = [];
 
   const history = useHistory();
 
@@ -64,16 +66,14 @@ function UserContextProvider({ children }) {
   };
 
   const getCollection = async () => {
-    if (user) {
-      await fire
-        .firestore()
-        .collection("users")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-          return setprofilData(doc.data());
-        });
-    }
+    await fire
+      .firestore()
+      .collection("users")
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        setprofilData(doc.data());
+      });
   };
 
   const Changes = () => {
@@ -99,14 +99,27 @@ function UserContextProvider({ children }) {
       Price: data.price,
       avatar: fileUrl,
       description: data.description,
+      id: user.uid,
     };
 
-    fire
+    await fire.firestore().collection("advertising").add({ payload });
+    await getDataAds();
+  };
+
+  const getDataAds = async () => {
+    await fire
       .firestore()
       .collection("advertising")
-      .doc(user.uid)
-      .set(payload && { payload });
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc, key) => {
+          // doc.data() is never undefined for query doc snapshots => Notice Amin
+          tempDoc.push({ ...doc.data().payload });
+        });
+        setUserAds(tempDoc);
+      });
   };
+
   const authListnner = () => {
     fire.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -125,7 +138,9 @@ function UserContextProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
+        tempDoc,
         user,
+        ads,
         setUser,
         eml,
         setEmail,
@@ -142,6 +157,7 @@ function UserContextProvider({ children }) {
         profilData,
         Changes,
         getAd,
+        getDataAds,
       }}
     >
       {children}

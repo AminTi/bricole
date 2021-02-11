@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,10 +6,11 @@ import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import Modal from "@material-ui/core/Modal";
+import CardAdvertesing from "../layout/CardAdvertesing";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    height: "100vh",
+    // height: "100vh",
   },
   containerFab: {
     display: "flex",
@@ -43,7 +44,9 @@ function UserPage() {
   const classes = useStyles();
   const [handleOpen, SethandleOpen] = useState(null);
   const { register, handleSubmit, errors } = useForm();
-  const { user, getCollection, getAd } = useContext(UserContext);
+  const { user, getAd, getDataAds, ads, getCollection } = useContext(
+    UserContext
+  );
 
   const clickHandler = () => {
     SethandleOpen(true);
@@ -51,8 +54,18 @@ function UserPage() {
 
   const onSubmit = (data, e) => {
     getAd(data);
-    getCollection();
+    getDataAds();
   };
+
+  useEffect(() => {
+    getCollection();
+    getDataAds();
+  }, []);
+
+  let currentUserid = user.uid;
+  const currentUser = ads.filter((elm) => {
+    return elm.id == currentUserid;
+  });
 
   return (
     <Container className={classes.container} maxWidth="m">
@@ -61,7 +74,6 @@ function UserPage() {
           <AddCircleIcon></AddCircleIcon>
         </Fab>
       </Container>
-
       <Modal open={handleOpen} className={classes.containerFab}>
         <Container className={classes.containerModal}>
           <CloseIcon
@@ -118,6 +130,7 @@ function UserPage() {
           </form>
         </Container>
       </Modal>
+      <CardAdvertesing currentUserAds={currentUser} />
     </Container>
   );
 }
