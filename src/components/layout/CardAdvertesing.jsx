@@ -95,6 +95,7 @@ function CardAdvertesing({
       await getDataAds();
     }
   };
+
   const DisplayCard = () => {
     if (currentUserAds) {
       return (
