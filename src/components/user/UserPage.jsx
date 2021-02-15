@@ -69,13 +69,12 @@ function UserPage() {
     getDataAds();
   }, []);
 
-  let currentUserid = user.uid;
-
+  let currentUserid = user && user.uid;
   const currentUser = ads.filter((elm) => {
     return elm.id == currentUserid;
   });
 
-  const allUsers = userCollection.filter((elm) => {
+  const CurrentUserProfil = userCollection.filter((elm) => {
     return elm.id == currentUserid;
   });
 
@@ -106,19 +105,13 @@ function UserPage() {
               variant="outlined"
               inputRef={register({ required: true, minLength: 2 })}
             />
-            <TextField
-              className={classes.TextField}
-              id="outlined-basic"
-              label="Professsion"
-              name="professsion"
-              variant="outlined"
-              inputRef={register({ required: true, minLength: 2 })}
-            />
+
             <TextField
               className={classes.TextField}
               id="outlined-basic"
               label="Price"
               name="price"
+              type="number"
               variant="outlined"
               inputRef={register({ required: true, minLength: 2 })}
             />
@@ -150,7 +143,10 @@ function UserPage() {
           </form>
         </Container>
       </Modal>
-      <CardAdvertesing currentUserAds={currentUser} />
+      <CardAdvertesing
+        currentUserAds={currentUser}
+        currentProfil={CurrentUserProfil}
+      />
     </Container>
   );
 }

@@ -121,7 +121,17 @@ function UserContextProvider({ children }) {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc, key) => {
           // doc.data() is never undefined for query doc snapshots => Notice Amin
-          tempDoc.push({ ...doc.data().payload });
+
+          let payload = {
+            adsId: doc.id,
+            Price: doc.data().payload.Price,
+            avatar: doc.data().payload.avatar,
+            description: doc.data().payload.description,
+            id: doc.data().payload.id,
+            titel: doc.data().payload.titel,
+          };
+          console.log(payload);
+          tempDoc.push({ ...payload });
         });
         setUserAds(tempDoc);
       });
@@ -154,6 +164,11 @@ function UserContextProvider({ children }) {
     authListnner();
   }, []);
 
+  const deleteData = (data) => {
+    if (data) {
+      fire.firestore().collection("advertising").doc(data).delete();
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -180,6 +195,7 @@ function UserContextProvider({ children }) {
         getDataAds,
         tempDocUsers,
         userCollection,
+        deleteData,
       }}
     >
       {children}

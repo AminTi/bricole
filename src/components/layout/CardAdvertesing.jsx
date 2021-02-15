@@ -1,7 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
+import {
+  Container,
+  Fab,
+  TextField,
+  Button,
+  Box,
+  setRef,
+} from "@material-ui/core";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,6 +26,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ReportRounded } from "@material-ui/icons";
+import DetailsIcon from "@material-ui/icons/Details";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -48,19 +56,45 @@ const useStyles = makeStyles((theme) => ({
   },
   delete: {
     color: " red",
+    objectFit: "contain",
+  },
+  DetailsIcon: {
+    color: "blue",
+    zIndex: 1000,
+  },
+  price: {
+    color: "green",
+  },
+  Typography: {
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
-function CardAdvertesing({ currentUserAds, allUsersAds }) {
+function CardAdvertesing({
+  currentUserAds,
+  allUsersAds,
+  currentProfil,
+  useEffect,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const { user, getCollection, profilData } = useContext(UserContext);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const {
+    user,
+    getCollection,
+    profilData,
+    deleteData,
+    getDataAds,
+  } = useContext(UserContext);
+
+  const DeleteHandler = async (e) => {
+    const id = e.currentTarget.getAttribute("data-del");
+    if (id) {
+      await deleteData(id);
+      await getDataAds();
+    }
   };
-
-  console.log(profilData);
   const DisplayCard = () => {
     if (currentUserAds) {
       return (
@@ -69,18 +103,8 @@ function CardAdvertesing({ currentUserAds, allUsersAds }) {
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      {/* {.slice(0, 1)} */}
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
                   title={item.titel}
-                  subheader={`Price ${item.Price}`}
+                  subheader={currentProfil && currentProfil[0].Profession}
                 />
                 <CardMedia
                   className={classes.media}
@@ -92,17 +116,27 @@ function CardAdvertesing({ currentUserAds, allUsersAds }) {
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    className={classes.Typography}
                   >
+                    <span
+                      className={classes.price}
+                    >{`${item.Price} Kr/tim`}</span>
                     This impressive paella is a perfect party dish and a fun
                     meal to cook together with your guests. Add 1 cup of frozen
                     peas along with the mussels, if you like.
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <Button color="primary">More Details</Button>
+                  <IconButton aria-label="More Details">
+                    <DetailsIcon className={classes.DetailsIcon} />
+                  </IconButton>
 
                   <IconButton className={classes.expand}>
-                    <DeleteIcon className={classes.delete} />
+                    <DeleteIcon
+                      data-del={item.adsId}
+                      onClick={DeleteHandler}
+                      className={classes.delete}
+                    />
                   </IconButton>
                 </CardActions>
               </Card>
@@ -117,39 +151,33 @@ function CardAdvertesing({ currentUserAds, allUsersAds }) {
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      {/* .slice(0,1); */}
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
                   title={item.titel}
-                  subheader={`Price ${item.Price}`}
+                  subheader={currentProfil && currentProfil[0].Profession}
                 />
                 <CardMedia
                   className={classes.media}
                   image={item.avatar}
-                  title=""
+                  title={item.id}
                 />
                 <CardContent>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    className={classes.Typography}
                   >
+                    <span
+                      className={classes.price}
+                    >{`${item.Price} Kr/tim`}</span>
                     This impressive paella is a perfect party dish and a fun
                     meal to cook together with your guests. Add 1 cup of frozen
                     peas along with the mussels, if you like.
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <Button variant="contained" color="primary">
-                    More Details
-                  </Button>
+                  <IconButton aria-label="More Details">
+                    <DetailsIcon className={classes.DetailsIcon} />
+                  </IconButton>
                   <Button color="primary">Reservation</Button>
                 </CardActions>
               </Card>
