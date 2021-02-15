@@ -57,6 +57,7 @@ function SingUp() {
   password.current = watch("password", "");
 
   const onSubmit = (data, e) => {
+    // Test only
     if (myPassword == data.password) {
       handelSingUp();
       e.target.reset();

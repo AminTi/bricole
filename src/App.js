@@ -15,7 +15,7 @@ import ProfilDisabled from "./components/user/ProfilDisabled";
 
 const useStyles = makeStyles({
   container: {
-    height: "100%",
+    height: "100vh",
   },
 });
 
@@ -33,7 +33,7 @@ function App() {
         <Route path="/SingUp" component={SingUp} />
         <Route path="/ProfilDisabled" component={ProfilDisabled} />
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

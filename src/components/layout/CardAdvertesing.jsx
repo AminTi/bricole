@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     flexWrap: "wrap",
     padding: "10px 10px",
+    justifyContent: "center",
   },
   root: {
     maxWidth: 345,

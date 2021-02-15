@@ -55,12 +55,11 @@ function Login() {
 
   const onSubmit = (data, e) => {
     handelSingIn();
-    Changes();
+    // Changes();
   };
 
   useEffect(() => {
-    handelSingIn();
-    Changes();
+    // Changes();
   }, [onSubmit]);
 
   return (

@@ -84,14 +84,16 @@ function UserContextProvider({ children }) {
 
   const Changes = () => {
     if (user) {
-      let documentRef = fire.firestore().collection("users").doc(user.uid);
-      documentRef.get().then((documentSnapshot) => {
-        if (documentSnapshot.exists) {
-          history.push("/UserPage");
-        }
-      });
+      console.log(fire.auth());
+      // let documentRef = fire.firestore().collection("users").doc(user.uid);
+      // documentRef.get().then((documentSnapshot) => {
+      //   if (documentSnapshot.exists) {
+      //     history.push("/UserPage");
+      //   }
+      // });
     }
   };
+  Changes();
 
   const getAd = async (data) => {
     const file = data.image[0];
@@ -138,7 +140,6 @@ function UserContextProvider({ children }) {
         });
         setuserCollection(tempDocUsers);
       });
-    console.log(tempDocUsers);
   };
 
   const authListnner = () => {
@@ -149,7 +150,6 @@ function UserContextProvider({ children }) {
         setUser(user);
       }
     });
-    Changes();
   };
 
   useEffect(() => {

@@ -61,7 +61,7 @@ function UserPage() {
 
   const onSubmit = (data, e) => {
     getAd(data);
-    getDataAds();
+    data && SethandleOpen(false);
   };
 
   useEffect(() => {
