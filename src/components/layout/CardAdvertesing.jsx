@@ -17,6 +17,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { ReportRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -36,11 +38,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   expand: {
-    transform: "rotate(0deg)",
     marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
   },
   expandOpen: {
     transform: "rotate(180deg)",
@@ -48,9 +46,12 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red,
   },
+  delete: {
+    color: " red",
+  },
 }));
 
-function CardAdvertesing({ currentUserAds }) {
+function CardAdvertesing({ currentUserAds, allUsersAds }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const { user, getCollection, profilData } = useContext(UserContext);
@@ -59,61 +60,106 @@ function CardAdvertesing({ currentUserAds }) {
     setExpanded(!expanded);
   };
 
-  useEffect(() => {}, []);
-  // console.log(profilData);
+  console.log(profilData);
+  const DisplayCard = () => {
+    if (currentUserAds) {
+      return (
+        <Container className={classes.wrapper} maxWidth="m">
+          {currentUserAds.map((item, index) => {
+            return (
+              <Card className={classes.root} key={index}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {/* {.slice(0, 1)} */}
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={item.titel}
+                  subheader={`Price ${item.Price}`}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={item.avatar}
+                  title=""
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    This impressive paella is a perfect party dish and a fun
+                    meal to cook together with your guests. Add 1 cup of frozen
+                    peas along with the mussels, if you like.
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <Button color="primary">More Details</Button>
 
-  // console.log(currentUserAds);
-
-  return (
-    <Container className={classes.wrapper} maxWidth="m">
-      {currentUserAds.map((item, index) => {
-        return (
-          <Card className={classes.root} key={index}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                  {/* .slice(0,1); */}
-                </Avatar>
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={item.titel}
-              subheader={`Price ${item.Price}`}
-            />
-            <CardMedia className={classes.media} image={item.avatar} title="" />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-        );
-      })}
-    </Container>
-  );
+                  <IconButton className={classes.expand}>
+                    <DeleteIcon className={classes.delete} />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            );
+          })}
+        </Container>
+      );
+    } else if (allUsersAds) {
+      return (
+        <Container className={classes.wrapper} maxWidth="m">
+          {allUsersAds.map((item, index) => {
+            return (
+              <Card className={classes.root} key={index}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      {/* .slice(0,1); */}
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={item.titel}
+                  subheader={`Price ${item.Price}`}
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={item.avatar}
+                  title=""
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    This impressive paella is a perfect party dish and a fun
+                    meal to cook together with your guests. Add 1 cup of frozen
+                    peas along with the mussels, if you like.
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <Button variant="contained" color="primary">
+                    More Details
+                  </Button>
+                  <Button color="primary">Reservation</Button>
+                </CardActions>
+              </Card>
+            );
+          })}
+        </Container>
+      );
+    }
+  };
+  return <> {DisplayCard()} </>;
 }
 
 export default CardAdvertesing;

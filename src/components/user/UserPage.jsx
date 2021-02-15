@@ -70,6 +70,7 @@ function UserPage() {
   }, []);
 
   let currentUserid = user.uid;
+
   const currentUser = ads.filter((elm) => {
     return elm.id == currentUserid;
   });
@@ -77,8 +78,6 @@ function UserPage() {
   const allUsers = userCollection.filter((elm) => {
     return elm.id == currentUserid;
   });
-
-  console.log(userCollection);
 
   return (
     <Container className={classes.container} maxWidth="m">
@@ -104,6 +103,14 @@ function UserPage() {
               id="outlined-basic"
               label="Titel"
               name="titel"
+              variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
+            />
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
+              label="Professsion"
+              name="professsion"
               variant="outlined"
               inputRef={register({ required: true, minLength: 2 })}
             />

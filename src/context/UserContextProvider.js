@@ -84,16 +84,14 @@ function UserContextProvider({ children }) {
 
   const Changes = () => {
     if (user) {
-      console.log(fire.auth());
-      // let documentRef = fire.firestore().collection("users").doc(user.uid);
-      // documentRef.get().then((documentSnapshot) => {
-      //   if (documentSnapshot.exists) {
-      //     history.push("/UserPage");
-      //   }
-      // });
+      let documentRef = fire.firestore().collection("users").doc(user.uid);
+      documentRef.get().then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          history.push("/UserPage");
+        }
+      });
     }
   };
-  Changes();
 
   const getAd = async (data) => {
     const file = data.image[0];

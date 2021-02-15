@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import NavBar from "./components/layout/NavBar";
 import Footer from "./components/layout/Footer";
-import CreateUser from "./components/CreateUser";
 import Login from "./components/Login";
 import UserPage from "./components/user/UserPage";
 import SingUp from "./components/SingUp";
@@ -26,7 +25,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/" exact component={Dashboard} />
-        {/* <Route path="/CreateUser" component={CreateUser} /> */}
+
         <Route path="/Login" component={Login} />
         <Route path="/UserPage" component={UserPage} />
         <Route path="/profil" component={Profil} />
