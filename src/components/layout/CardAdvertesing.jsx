@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -27,6 +28,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ReportRounded } from "@material-ui/icons";
 import DetailsIcon from "@material-ui/icons/Details";
+import EmailIcon from "@material-ui/icons/Email";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   root: {
-    maxWidth: 345,
+    width: "345px",
     margin: "1% 1%",
     backgroundColor: " #f7f0f0",
   },
@@ -71,12 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CardAdvertesing({
-  currentUserAds,
-  allUsersAds,
-  currentProfil,
-  useEffect,
-}) {
+function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -96,6 +93,8 @@ function CardAdvertesing({
     }
   };
 
+  console.log(currentProfil);
+
   const DisplayCard = () => {
     if (currentUserAds) {
       return (
@@ -104,8 +103,8 @@ function CardAdvertesing({
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader
-                  title={item.titel}
-                  subheader={currentProfil && currentProfil[0].Profession}
+                  title={currentProfil && currentProfil[0].Profession}
+                  subheader="Nackademin AD"
                 />
                 <CardMedia
                   className={classes.media}
@@ -122,9 +121,7 @@ function CardAdvertesing({
                     <span
                       className={classes.price}
                     >{`${item.Price} Kr/tim`}</span>
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
+                    {item.titel}
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -177,8 +174,24 @@ function CardAdvertesing({
                 </CardContent>
                 <CardActions disableSpacing>
                   <IconButton aria-label="More Details">
-                    <DetailsIcon className={classes.DetailsIcon} />
+                    <Link
+                      to={{
+                        pathname: "/detailspage",
+                        state: {
+                          adsId: item.adsId,
+                          userId: item.id,
+                        },
+                      }}
+                    >
+                      <DetailsIcon className={classes.DetailsIcon} />
+                    </Link>
                   </IconButton>
+                  <IconButton aria-label="More Details">
+                    <a href="mailto:webmaster@example.com">
+                      <EmailIcon />
+                    </a>
+                  </IconButton>
+
                   <Button color="primary">Reservation</Button>
                 </CardActions>
               </Card>

@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Dashboard() {
   const classes = useStyles();
-  const { ads, getAllUsers, getDataAds } = useContext(UserContext);
+  const { ads, getAllUsers, getDataAds, userCollection } = useContext(
+    UserContext
+  );
 
   useEffect(() => {
     getAllUsers();

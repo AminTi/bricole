@@ -10,8 +10,7 @@ import CardAdvertesing from "../layout/CardAdvertesing";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    minHeight: "100vh",
-    height: "100vh",
+    minHeight: 1000,
   },
   containerFab: {
     display: "flex",
@@ -115,6 +114,21 @@ function UserPage() {
               variant="outlined"
               inputRef={register({ required: true, minLength: 2 })}
             />
+
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
+              label="Profession"
+              variant="outlined"
+              type="text"
+              placeholder="Profession"
+              name="Profession"
+              inputRef={register({ required: true, minLength: 2 })}
+            />
+            {errors.Profession && (
+              <div className={classes.error}> Profession is required </div>
+            )}
+
             <TextField
               className={classes.TextField}
               id="outlined-basic"

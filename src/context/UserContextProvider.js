@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import fire from "../components/config/fire";
 import { useHistory } from "react-router";
-import { ContactSupportOutlined, FilterOutlined } from "@material-ui/icons";
 
 export const UserContext = createContext({});
 
@@ -57,10 +56,11 @@ function UserContextProvider({ children }) {
   };
 
   const CreateCollection = (data) => {
-    if (data) {
+    if (user) {
       const newdata = {
         Company: data.Company,
         Profession: data.Profession,
+        email: data.email,
         adress: data.adress,
         city: data.city,
         firstname: data.firstname,

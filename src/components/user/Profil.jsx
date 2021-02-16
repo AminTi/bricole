@@ -101,6 +101,26 @@ function Profil() {
             <TextField
               className={classes.TextField}
               id="outlined-basic"
+              label="email"
+              variant="outlined"
+              type="text"
+              placeholder="Email"
+              name="email"
+              inputRef={register({
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                },
+              })}
+            />
+            {errors.email && (
+              <div className={classes.error}> Invalid Email </div>
+            )}
+          </Box>
+          <Box>
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
               label="Profession"
               variant="outlined"
               type="text"

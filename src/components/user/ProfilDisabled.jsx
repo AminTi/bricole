@@ -90,6 +90,25 @@ function ProfilDisabled() {
           <Box>
             <InputLabel />
             <TextField
+              value={profilData && profilData.newdata.email}
+              className={classes.TextField}
+              id="outlined-basic"
+              label="email"
+              variant="outlined"
+              type="text"
+              placeholder="Email"
+              name="email"
+              inputRef={register({
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                },
+              })}
+            />
+          </Box>
+          <Box>
+            <InputLabel />
+            <TextField
               value={profilData && profilData.newdata.Profession}
               label="Profession"
               className={classes.TextField}
