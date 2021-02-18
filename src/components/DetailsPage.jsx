@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { UserContext } from "../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -62,10 +63,14 @@ function DetailsPage(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
+  const { profilData } = useContext(UserContext);
+
+  console.log(profilData);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const userId = props.location.state.id;
   console.log(props);
   return (
     <Container className={classes.container}>

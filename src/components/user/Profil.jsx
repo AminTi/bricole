@@ -52,12 +52,6 @@ function Profil() {
     e.target.reset();
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     CreateCollection();
-  //   }
-  // }, [onSubmit]);
-
   return (
     <Container className={classes.container} maxWidth="sm">
       <Grid

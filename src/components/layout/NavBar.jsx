@@ -62,6 +62,13 @@ function Navbar() {
   );
   const history = useHistory();
 
+  const clickhandler = () => {
+    if (user) {
+      getCollection(user.uid);
+      console.log(user);
+    }
+  };
+
   const ItemList = [
     {
       text: (
@@ -77,7 +84,7 @@ function Navbar() {
         <Link
           to="profilDisabled"
           className={classes.link}
-          onClick={getCollection}
+          onClick={clickhandler}
         >
           Profil
         </Link>

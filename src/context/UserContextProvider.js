@@ -71,11 +71,11 @@ function UserContextProvider({ children }) {
     }
   };
 
-  const getCollection = async () => {
+  const getCollection = async (userId) => {
     await fire
       .firestore()
       .collection("users")
-      .doc(user.uid)
+      .doc(userId)
       .get()
       .then((doc) => {
         setprofilData(doc.data());
@@ -120,8 +120,7 @@ function UserContextProvider({ children }) {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc, key) => {
-          // doc.data() is never undefined for query doc snapshots => Notice Amin
-
+          // doc.data() is never undefined for query doc snapshots => Notice
           let payload = {
             adsId: doc.id,
             Price: doc.data().payload.Price,

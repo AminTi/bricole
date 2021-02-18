@@ -9,6 +9,11 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     minHeight: "100%",
   },
+  styleContainer: {
+    height: 300,
+    background: "#f7f0f0",
+    margin: "1%",
+  },
 }));
 function Dashboard() {
   const classes = useStyles();
@@ -23,7 +28,10 @@ function Dashboard() {
 
   return (
     <Container className={classes.container}>
-      <CardAdvertesing allUsersAds={ads} />
+      <Container className={classes.styleContainer}> </Container>
+      <Container>
+        <CardAdvertesing allUsersAds={ads} />
+      </Container>
     </Container>
   );
 }

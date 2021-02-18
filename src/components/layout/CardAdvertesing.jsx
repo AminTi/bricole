@@ -93,7 +93,12 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
     }
   };
 
-  console.log(currentProfil);
+  const ClickHandler = (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+    if (id) {
+      getCollection(id);
+    }
+  };
 
   const DisplayCard = () => {
     if (currentUserAds) {
@@ -126,7 +131,18 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
                 </CardContent>
                 <CardActions disableSpacing>
                   <IconButton aria-label="More Details">
-                    <DetailsIcon className={classes.DetailsIcon} />
+                    <Link
+                      to={{
+                        pathname: "/detailspage",
+                        state: {
+                          item,
+                        },
+                      }}
+                      data-id={item.id}
+                      onClick={ClickHandler}
+                    >
+                      <DetailsIcon className={classes.DetailsIcon} />
+                    </Link>
                   </IconButton>
 
                   <IconButton className={classes.expand}>
@@ -178,10 +194,11 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
                       to={{
                         pathname: "/detailspage",
                         state: {
-                          adsId: item.adsId,
-                          userId: item.id,
+                          item,
                         },
                       }}
+                      data-id={item.id}
+                      onClick={ClickHandler}
                     >
                       <DetailsIcon className={classes.DetailsIcon} />
                     </Link>
