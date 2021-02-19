@@ -104,6 +104,7 @@ function UserContextProvider({ children }) {
       titel: data.titel,
       Price: data.price,
       avatar: fileUrl,
+      profession: data.Profession,
       description: data.description,
       id: user.uid,
     };
@@ -126,6 +127,7 @@ function UserContextProvider({ children }) {
             Price: doc.data().payload.Price,
             avatar: doc.data().payload.avatar,
             description: doc.data().payload.description,
+            profession: doc.data().payload.profession,
             id: doc.data().payload.id,
             titel: doc.data().payload.titel,
           };

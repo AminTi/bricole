@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import EmailModal from "./EmailModal";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     flexWrap: "wrap",
     padding: "10px 10px",
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   root: {
     width: "345px",
@@ -73,13 +74,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
+function CardAdvertesing({
+  currentUserAds,
+  allUsersAds,
+  currentProfil,
+  homePageUser,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [userData, setUserData] = useState("");
 
   const {
     user,
     getCollection,
+    userCollection,
     profilData,
     deleteData,
     getDataAds,
@@ -93,12 +101,12 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
     }
   };
 
-  const ClickHandler = (e) => {
+  const idHandler = (e) => {
     const id = e.currentTarget.getAttribute("data-id");
-    if (id) {
-      getCollection(id);
-    }
+    id && getCollection(id);
   };
+
+  console.log(profilData && profilData);
 
   const DisplayCard = () => {
     if (currentUserAds) {
@@ -108,9 +116,10 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader
-                  title={currentProfil && currentProfil[0].Profession}
-                  subheader="Nackademin AD"
+                  title={item.profession}
+                  subheader={currentProfil && currentProfil[0].Company}
                 />
+
                 <CardMedia
                   className={classes.media}
                   image={item.avatar}
@@ -138,8 +147,6 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
                           item,
                         },
                       }}
-                      data-id={item.id}
-                      onClick={ClickHandler}
                     >
                       <DetailsIcon className={classes.DetailsIcon} />
                     </Link>
@@ -165,9 +172,10 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader
-                  title={item.titel}
-                  subheader={currentProfil && currentProfil[0].Profession}
+                  title={item.profession}
+                  subheader={profilData && profilData.newdata.Company}
                 />
+
                 <CardMedia
                   className={classes.media}
                   image={item.avatar}
@@ -183,9 +191,7 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
                     <span
                       className={classes.price}
                     >{`${item.Price} Kr/tim`}</span>
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
+                    {item.titel}
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -198,15 +204,19 @@ function CardAdvertesing({ currentUserAds, allUsersAds, currentProfil }) {
                         },
                       }}
                       data-id={item.id}
-                      onClick={ClickHandler}
+                      onClick={idHandler}
                     >
                       <DetailsIcon className={classes.DetailsIcon} />
                     </Link>
                   </IconButton>
+
                   <IconButton aria-label="More Details">
-                    <a href="mailto:webmaster@example.com">
-                      <EmailIcon />
-                    </a>
+                    <div>
+                      <EmailModal
+                        className={classes.DetailsIcon}
+                        userId={item.id}
+                      />
+                    </div>
                   </IconButton>
 
                   <Button color="primary">Reservation</Button>

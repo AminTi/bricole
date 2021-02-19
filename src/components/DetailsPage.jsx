@@ -31,14 +31,15 @@ import EmailIcon from "@material-ui/icons/Email";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    minHeight: 1000,
+    minHeight: 1200,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     padding: "40px 10px",
   },
   root: {
-    maxWidth: "100%",
+    width: "90%",
+    backgroundColor: " #f7f0f0",
   },
   media: {
     height: 0,
@@ -57,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  price: {
+    color: "green",
+  },
+  title: {
+    color: "black",
+  },
 }));
 
 function DetailsPage(props) {
@@ -65,30 +72,30 @@ function DetailsPage(props) {
 
   const { profilData } = useContext(UserContext);
 
-  console.log(profilData);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const userId = props.location.state.id;
-  console.log(props);
+  const data = props.location.state.item;
+
   return (
     <Container className={classes.container}>
       <Card className={classes.root}>
         <CardHeader
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={data.profession}
+          subheader={profilData && profilData.newdata.Company}
         />
         <CardMedia
           className={classes.media}
-          image="https://via.placeholder.com/300.png/09f/fff"
+          image={data.avatar}
           title="Paella dish"
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            <Box className={classes.price}>{`${data.Price} :-`}</Box>
+            <Box className={classes.title}>
+              <h3> {data.titel} </h3>
+            </Box>
+            <Box>{data.description}</Box>
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
