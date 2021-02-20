@@ -12,8 +12,11 @@ function UserContextProvider({ children }) {
   const [profilData, setprofilData] = useState("");
   const [ads, setUserAds] = useState([]);
   const [userCollection, setuserCollection] = useState([]);
+  const [readEmails, setReadEmails] = useState([]);
   let tempDoc = [];
   let tempDocUsers = [];
+  let emailsData = [];
+
   const history = useHistory();
 
   const handelSingUp = () =>
@@ -114,6 +117,12 @@ function UserContextProvider({ children }) {
     await getAllUsers();
   };
 
+  const emails = async (data) => {
+    await fire.firestore().collection("emails").add({ data });
+    await getDataAds();
+    await getAllUsers();
+  };
+
   const getDataAds = async () => {
     await fire
       .firestore()
@@ -170,6 +179,28 @@ function UserContextProvider({ children }) {
       fire.firestore().collection("advertising").doc(data).delete();
     }
   };
+
+  const getemails = async () => {
+    await fire
+      .firestore()
+      .collection("emails")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc, key) => {
+          // doc.data() is never undefined for query doc snapshots => Notice
+          let payload = {
+            emailId: doc.id,
+            titel: doc.data().data.titel,
+            email: doc.data().data.email,
+            userid: doc.data().data.id,
+            text: doc.data().data.test,
+          };
+
+          emailsData.push({ ...payload });
+        });
+        setReadEmails(emailsData);
+      });
+  };
   return (
     <UserContext.Provider
       value={{
@@ -197,6 +228,9 @@ function UserContextProvider({ children }) {
         tempDocUsers,
         userCollection,
         deleteData,
+        emails,
+        getemails,
+        readEmails,
       }}
     >
       {children}

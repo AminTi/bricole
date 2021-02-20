@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import EmailIcon from "@material-ui/icons/Email";
 import CloseIcon from "@material-ui/icons/Close";
@@ -44,7 +45,14 @@ function EmailModal({ userId }) {
   const [handleOpen, SethandleOpen] = useState(null);
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data, e) => {};
+  const { emails } = useContext(UserContext);
+  const onSubmit = (data, e) => {
+    let values = { ...data, id: userId };
+    if (values) {
+      emails(values);
+      SethandleOpen(false);
+    }
+  };
 
   return (
     <>

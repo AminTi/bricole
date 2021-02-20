@@ -12,6 +12,7 @@ import Dashboard from "./components/Dashboard";
 import Profil from "./components/user/Profil";
 import ProfilDisabled from "./components/user/ProfilDisabled";
 import DetailsPage from "./components/DetailsPage";
+import Inbox from "./components/user/Inbox";
 
 const useStyles = makeStyles({
   test: {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/SingUp" component={SingUp} />
           <Route path="/ProfilDisabled" component={ProfilDisabled} />
           <Route path="/detailspage" component={DetailsPage} />
+          <Route path="/inbox" component={Inbox} />
         </Switch>
       </div>
       <Footer />

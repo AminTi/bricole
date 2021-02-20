@@ -101,7 +101,12 @@ function Navbar() {
     },
 
     {
-      text: "Inbox",
+      text: (
+        <Link to="/inbox" className={classes.link}>
+          {" "}
+          Inbox{" "}
+        </Link>
+      ),
       icon: <MailIcon />,
     },
     {
