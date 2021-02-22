@@ -13,6 +13,8 @@ import Profil from "./components/user/Profil";
 import ProfilDisabled from "./components/user/ProfilDisabled";
 import DetailsPage from "./components/DetailsPage";
 import Inbox from "./components/user/Inbox";
+import DisplayEmails from "./components/user/DisplayEmails";
+import BokaMera from "./components/BokaMera";
 
 const useStyles = makeStyles({
   test: {
@@ -36,6 +38,8 @@ function App() {
           <Route path="/ProfilDisabled" component={ProfilDisabled} />
           <Route path="/detailspage" component={DetailsPage} />
           <Route path="/inbox" component={Inbox} />
+          <Route path="/displayemails/:slug" component={DisplayEmails} />
+          <Route path="/bokamera" component={BokaMera} />
         </Switch>
       </div>
       <Footer />

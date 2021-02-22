@@ -96,7 +96,7 @@ function CardAdvertesing({
   const DeleteHandler = async (e) => {
     const id = e.currentTarget.getAttribute("data-del");
     if (id) {
-      await deleteData(id);
+      await deleteData(id, "advertising");
       await getDataAds();
     }
   };

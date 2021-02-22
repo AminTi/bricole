@@ -174,9 +174,9 @@ function UserContextProvider({ children }) {
     authListnner();
   }, []);
 
-  const deleteData = (data) => {
+  const deleteData = (data, collectionName) => {
     if (data) {
-      fire.firestore().collection("advertising").doc(data).delete();
+      fire.firestore().collection(collectionName).doc(data).delete();
     }
   };
 
@@ -193,12 +193,26 @@ function UserContextProvider({ children }) {
             titel: doc.data().data.titel,
             email: doc.data().data.email,
             userid: doc.data().data.id,
-            text: doc.data().data.test,
+            text: doc.data().data.text,
           };
 
           emailsData.push({ ...payload });
         });
         setReadEmails(emailsData);
+      });
+  };
+
+  const sendEmail = () => {
+    fire
+      .firestore()
+      .collection("mail")
+      .add({
+        to: "titiamin@icloud.com",
+
+        message: {
+          subject: "Hello from Firebase!",
+          html: "This is an <code>HTML</code> email body.",
+        },
       });
   };
   return (
@@ -231,6 +245,7 @@ function UserContextProvider({ children }) {
         emails,
         getemails,
         readEmails,
+        sendEmail,
       }}
     >
       {children}
