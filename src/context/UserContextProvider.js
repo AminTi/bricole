@@ -13,9 +13,11 @@ function UserContextProvider({ children }) {
   const [ads, setUserAds] = useState([]);
   const [userCollection, setuserCollection] = useState([]);
   const [readEmails, setReadEmails] = useState([]);
+  const [bookings, setbookings] = useState([]);
   let tempDoc = [];
   let tempDocUsers = [];
   let emailsData = [];
+  let bookingArr = [];
 
   const history = useHistory();
 
@@ -202,19 +204,41 @@ function UserContextProvider({ children }) {
       });
   };
 
-  const sendEmail = () => {
-    fire
-      .firestore()
-      .collection("mail")
-      .add({
-        to: "titiamin@icloud.com",
+  const bookingData = async (data) => {
+    console.log(data);
+    if (data) {
+      await fire.firestore().collection("booking").add({ data });
+    }
+  };
 
-        message: {
-          subject: "Hello from Firebase!",
-          html: "This is an <code>HTML</code> email body.",
-        },
+  const Getbookings = async () => {
+    await fire
+      .firestore()
+      .collection("booking")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc, key) => {
+          // doc.data() is never undefined for query doc snapshots => Notice
+
+          let payload = {
+            emailId: doc.id,
+            firstname: doc.data().data.firstname,
+            lastname: doc.data().data.lastname,
+            adress: doc.data().data.adress,
+            city: doc.data().data.city,
+            email: doc.data().data.email,
+            bookingTime: doc.data().data.booking,
+            userid: doc.data().data.id,
+            mobile: doc.data().data.mobile,
+            total: doc.data().data.totalamount,
+          };
+
+          bookingArr.push({ ...payload });
+        });
+        setbookings(bookingArr);
       });
   };
+
   return (
     <UserContext.Provider
       value={{
@@ -245,7 +269,10 @@ function UserContextProvider({ children }) {
         emails,
         getemails,
         readEmails,
-        sendEmail,
+
+        bookingData,
+        Getbookings,
+        bookings,
       }}
     >
       {children}

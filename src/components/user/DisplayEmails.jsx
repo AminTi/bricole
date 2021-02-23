@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
+import ReplayModal from "../layout/ReplayModal";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
 
 function DisplayEmails(props) {
   const classes = useStyles();
+  const [handleOpen, SethandleOpen] = useState(false);
   const { readEmails, getemails, sendEmail } = useContext(UserContext);
   let url = props.location.pathname;
   const id = props.match.params.slug;
@@ -44,7 +46,8 @@ function DisplayEmails(props) {
 
   const clickHandler = (e) => {
     console.log("hej");
-    sendEmail();
+
+    SethandleOpen(true);
   };
 
   const emailsContent = () => {
@@ -97,6 +100,7 @@ function DisplayEmails(props) {
       >
         Answer
       </Button>
+      <ReplayModal openModal={handleOpen} closeModal={SethandleOpen} />
     </Container>
   );
 }

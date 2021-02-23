@@ -26,6 +26,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 
 import InfoIcon from "@material-ui/icons/Info";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -76,7 +78,7 @@ function Navbar() {
           Home
         </Link>
       ),
-      icon: <DashboardIcon />,
+      icon: <HomeIcon />,
     },
 
     {
@@ -108,6 +110,14 @@ function Navbar() {
         </Link>
       ),
       icon: <MailIcon />,
+    },
+    {
+      text: (
+        <Link to="/bookings" className={classes.link}>
+          Bookings
+        </Link>
+      ),
+      icon: <AssignmentIndIcon />,
     },
     {
       text: "Contacts",

@@ -219,7 +219,11 @@ function CardAdvertesing({
                     </div>
                   </IconButton>
 
-                  <Button color="primary">Reservation</Button>
+                  <Button color="primary">
+                    <Link to={`/bokamera/${item.id}/${item.Price}`}>
+                      Reservation
+                    </Link>
+                  </Button>
                 </CardActions>
               </Card>
             );

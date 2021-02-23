@@ -15,6 +15,8 @@ import DetailsPage from "./components/DetailsPage";
 import Inbox from "./components/user/Inbox";
 import DisplayEmails from "./components/user/DisplayEmails";
 import BokaMera from "./components/BokaMera";
+import Orderpage from "./components/OrderPage";
+import Bookings from "./components/user/Bookings";
 
 const useStyles = makeStyles({
   test: {
@@ -39,7 +41,9 @@ function App() {
           <Route path="/detailspage" component={DetailsPage} />
           <Route path="/inbox" component={Inbox} />
           <Route path="/displayemails/:slug" component={DisplayEmails} />
-          <Route path="/bokamera" component={BokaMera} />
+          <Route path="/bokamera/:slug/:price" component={BokaMera} />
+          <Route path="/orderpage" component={Orderpage} />
+          <Route path="/bookings" component={Bookings} />
         </Switch>
       </div>
       <Footer />
