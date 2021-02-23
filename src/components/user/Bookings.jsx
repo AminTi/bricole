@@ -45,20 +45,19 @@ function Bookings() {
     return elm.userid == id;
   });
 
-  useEffect(() => {
-    Getbookings();
-  }, []);
-
   const DeleteHandler = async (e) => {
     const id = e.currentTarget.getAttribute("data-del");
-
+    console.log(id);
     if (id) {
       await deleteData(id, "booking");
       await Getbookings();
     }
   };
 
-  console.log(currentUser);
+  useEffect(() => {
+    Getbookings();
+  }, []);
+
   return (
     <Container className={classes.wrapper}>
       <TableContainer component={Paper}>
@@ -77,10 +76,7 @@ function Bookings() {
                   {index}
                 </TableCell>
                 <TableCell component="th" scope="row" align="left">
-                  <Link
-                    to={`/displayemails/${row.emailId}`}
-                    data-id={row.emailId}
-                  >
+                  <Link to={`/bookingdetails/${row.ReservationId}`}>
                     {row.bookingTime}
                   </Link>
                 </TableCell>
@@ -89,7 +85,7 @@ function Bookings() {
                     <DeleteIcon
                       className={classes.delete}
                       onClick={DeleteHandler}
-                      data-del={row.emailId}
+                      data-del={row.ReservationId}
                     />
                   </IconButton>
                 </TableCell>

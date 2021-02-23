@@ -6,8 +6,7 @@ import CardAdvertesing from "./layout/CardAdvertesing";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    height: "100%",
-    minHeight: "100%",
+    height: 1500,
   },
   styleContainer: {
     height: 300,

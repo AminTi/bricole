@@ -205,7 +205,6 @@ function UserContextProvider({ children }) {
   };
 
   const bookingData = async (data) => {
-    console.log(data);
     if (data) {
       await fire.firestore().collection("booking").add({ data });
     }
@@ -218,10 +217,8 @@ function UserContextProvider({ children }) {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc, key) => {
-          // doc.data() is never undefined for query doc snapshots => Notice
-
           let payload = {
-            emailId: doc.id,
+            ReservationId: doc.id,
             firstname: doc.data().data.firstname,
             lastname: doc.data().data.lastname,
             adress: doc.data().data.adress,
