@@ -39,7 +39,7 @@ function App() {
           <Route path="/profil" component={Profil} />
           <Route path="/SingUp" component={SingUp} />
           <Route path="/ProfilDisabled" component={ProfilDisabled} />
-          <Route path="/detailspage" component={DetailsPage} />
+          <Route path="/detailspage/:userid/:adsid" component={DetailsPage} />
           <Route path="/inbox" component={Inbox} />
           <Route path="/displayemails/:slug" component={DisplayEmails} />
           <Route path="/bokamera/:slug/:price" component={BokaMera} />

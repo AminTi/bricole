@@ -61,6 +61,7 @@ function UserContextProvider({ children }) {
   };
 
   const CreateCollection = (data) => {
+    console.log(data);
     if (user) {
       const newdata = {
         Company: data.Company,
@@ -108,6 +109,7 @@ function UserContextProvider({ children }) {
     const payload = {
       titel: data.titel,
       Price: data.price,
+      city: data.city,
       avatar: fileUrl,
       profession: data.Profession,
       description: data.description,
@@ -137,12 +139,13 @@ function UserContextProvider({ children }) {
             adsId: doc.id,
             Price: doc.data().payload.Price,
             avatar: doc.data().payload.avatar,
+            city: doc.data().payload.city,
             description: doc.data().payload.description,
             profession: doc.data().payload.profession,
             id: doc.data().payload.id,
             titel: doc.data().payload.titel,
           };
-          console.log(payload);
+
           tempDoc.push({ ...payload });
         });
         setUserAds(tempDoc);

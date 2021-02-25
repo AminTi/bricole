@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserContextProvider";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CardAdvertesing from "./layout/CardAdvertesing";
+import SerachBar from "./layout/SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,6 +34,7 @@ function Dashboard() {
     <Container className={classes.container}>
       <Container className={classes.styleContainer}> </Container>
       <Container>
+        <SerachBar allUsersAds={ads} allUsers={userCollection} />
         <CardAdvertesing allUsersAds={ads} />
       </Container>
     </Container>

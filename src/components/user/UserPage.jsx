@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     zIndex: "1000",
   },
+  hide: {
+    display: "none",
+    // remmber : type hiiden do not on materail ui work check why
+  },
 }));
 
 function UserPage() {
@@ -48,18 +52,21 @@ function UserPage() {
     user,
     getAd,
     getDataAds,
+
     ads,
     getCollection,
     getAllUsers,
     userCollection,
+    profilData,
   } = useContext(UserContext);
 
   const clickHandler = () => {
     SethandleOpen(true);
   };
 
-  const onSubmit = (data, e) => {
-    getAd(data);
+  const onSubmit = async (data, e) => {
+    console.log(data);
+    await getAd(data);
     data && SethandleOpen(false);
   };
 
@@ -69,13 +76,17 @@ function UserPage() {
   }, []);
 
   let currentUserid = user && user.uid;
-  const currentUser = ads.filter((elm) => {
-    return elm.id == currentUserid;
-  });
+  const currentUser =
+    ads &&
+    ads.filter((elm) => {
+      return elm.id == currentUserid && currentUserid;
+    });
 
-  const CurrentUserProfil = userCollection.filter((elm) => {
-    return elm.id == currentUserid;
-  });
+  const CurrentUserProfil =
+    userCollection &&
+    userCollection.filter((elm) => {
+      return elm.id == currentUserid && currentUserid;
+    });
 
   return (
     <Container className={classes.container} maxWidth="m">
@@ -136,6 +147,17 @@ function UserPage() {
               name="image"
               variant="outlined"
               inputRef={register({ required: true })}
+            />
+
+            <TextField
+              className={classes.hide}
+              id="outlined-basic"
+              label="City"
+              name="city"
+              value={currentUserid && currentUserid[0].city}
+              multiline
+              variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
             />
 
             <TextField
