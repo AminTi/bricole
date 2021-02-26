@@ -65,9 +65,10 @@ function UserPage() {
   };
 
   const onSubmit = async (data, e) => {
-    console.log(data);
-    await getAd(data);
-    data && SethandleOpen(false);
+    if (CurrentUserProfil[0].city) {
+      await getAd({ ...data, city: CurrentUserProfil[0].city });
+      data && SethandleOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -149,7 +150,7 @@ function UserPage() {
               inputRef={register({ required: true })}
             />
 
-            <TextField
+            {/* <TextField
               className={classes.hide}
               id="outlined-basic"
               label="City"
@@ -158,7 +159,7 @@ function UserPage() {
               multiline
               variant="outlined"
               inputRef={register({ required: true, minLength: 2 })}
-            />
+            /> */}
 
             <TextField
               className={classes.TextField}

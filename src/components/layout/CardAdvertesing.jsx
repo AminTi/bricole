@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import EmailModal from "./EmailModal";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContextProvider";
@@ -91,6 +91,7 @@ function CardAdvertesing({
     profilData,
     deleteData,
     getDataAds,
+    getLocalStorage,
   } = useContext(UserContext);
 
   const DeleteHandler = async (e) => {
@@ -105,6 +106,24 @@ function CardAdvertesing({
     const id = e.currentTarget.getAttribute("data-id");
     id && getCollection(id);
   };
+
+  const localStorageValues = () => {
+    return localStorage.getItem("values");
+  };
+
+  console.log(getLocalStorage);
+
+  // const filerCityOrProfession =
+  //   currentUserAds &&
+  //   currentUserAds.filter((elm) => {
+  //     return elm.localStoragID == localStoragID && localStoragID;
+  //   });
+
+  // console.log(filerCityOrProfession);
+
+  useEffect(() => {
+    localStorageValues();
+  }, []);
 
   const DisplayCard = () => {
     if (currentUserAds) {

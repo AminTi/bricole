@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import AppBar from "@material-ui/core/AppBar";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -28,32 +29,42 @@ function SearchBar({ allUsersAds, allUsers }) {
 
   return (
     <Box className={classes.bar}>
+      <InputLabel id="demo-simple-select-label">Profession</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         className={classes.serachbar1}
       >
-        <MenuItem value={null}>--</MenuItem>
+        <MenuItem value={null}>------</MenuItem>
         {allUsersAds &&
           allUsersAds.map((item, index) => {
             return (
-              <MenuItem value={item.profession} key={index}>
+              <MenuItem
+                value={item.profession}
+                key={index}
+                onClick={(e) => localStorage.setItem("values", item.profession)}
+              >
                 {item.profession}
               </MenuItem>
             );
           })}
       </Select>
-
+      <InputLabel id="demo">City</InputLabel>
       <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
+        labelId="demo-simple-select-helper-label"
+        id="demo-simple-select-helper"
         className={classes.serachbar1}
+        value="City"
       >
-        <MenuItem>--</MenuItem>
+        <MenuItem value={null}>------</MenuItem>
         {allUsers &&
           allUsers.map((item, index) => {
             return (
-              <MenuItem value={item.city} key={index}>
+              <MenuItem
+                value={item.city}
+                key={index}
+                onClick={(e) => localStorage.setItem("values", item.city)}
+              >
                 {item.city}
               </MenuItem>
             );
