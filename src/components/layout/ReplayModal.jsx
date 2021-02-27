@@ -1,15 +1,14 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
-import EmailIcon from "@material-ui/icons/Email";
 import CloseIcon from "@material-ui/icons/Close";
 import Modal from "@material-ui/core/Modal";
 import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 
 require("dotenv").config();
-const sendGridMail = require("@sendgrid/mail");
-sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.REACT_APP_SENDGRID_API_KEY);
 
 const useStyles = makeStyles((theme) => ({
   mailICon: {
@@ -52,14 +51,15 @@ function ReplayModal({ openModal, closeModal, customerEmail }) {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = async (data, e) => {
+    console.log(process.env);
     const msg = {
-      to: data.email, // Change to your recipient
+      to: "titiamin@icloud.com",
       from: "titiamin@icloud.com",
-      subject: data.titel,
-      text: data.text,
-      html: "<strong>Sent by Bricole No-replay </strong>",
+      subject: "Example Email",
+      text: ` Dear user,Here is your email.`,
+      html: `  <p>Dear user,</p> <p>Here is your email.</p>`,
     };
-    await sendGridMail
+    sgMail
       .send(msg)
       .then(() => {
         console.log("Email sent");
@@ -67,7 +67,6 @@ function ReplayModal({ openModal, closeModal, customerEmail }) {
       .catch((error) => {
         console.error(error);
       });
-    // await SethandleOpen(closeModal);
   };
 
   return (
@@ -80,19 +79,21 @@ function ReplayModal({ openModal, closeModal, customerEmail }) {
           />
 
           <form
+            action="https://formspree.io/f/xoqpzonp"
+            method="POST"
             className={classes.root}
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >
             <TextField
               className={classes.TextField}
-              value={customerEmail}
+              value={customerEmail ? customerEmail : ""}
               id="outlined-basic"
               label="email"
               variant="outlined"
               type="text"
               placeholder="Email"
-              name="email"
+              name="_replyto"
               inputRef={register({
                 required: true,
                 pattern: {
@@ -100,7 +101,7 @@ function ReplayModal({ openModal, closeModal, customerEmail }) {
                 },
               })}
             />
-            {errors.email && (
+            {errors._replyto && (
               <div className={classes.error}> Invalid Email </div>
             )}
 
@@ -117,7 +118,7 @@ function ReplayModal({ openModal, closeModal, customerEmail }) {
               className={classes.TextField}
               id="outlined-basic"
               label="Text  "
-              name="text"
+              name="message"
               multiline
               rows={8}
               variant="outlined"

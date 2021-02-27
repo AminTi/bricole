@@ -48,6 +48,11 @@ function DisplayEmails(props) {
     SethandleOpen(true);
   };
 
+  const retrunCrntEpost = () => {
+    if (currentuerEmails.length > 0) {
+      return currentuerEmails[0].email;
+    }
+  };
   const emailsContent = () => {
     if (currentuerEmails.length != 0) {
       return (
@@ -98,10 +103,11 @@ function DisplayEmails(props) {
       >
         Answer
       </Button>
+
       <ReplayModal
         openModal={handleOpen}
         closeModal={SethandleOpen}
-        customerEmail={currentuerEmails && currentuerEmails[0].email}
+        customerEmail={retrunCrntEpost()}
       />
     </Container>
   );
