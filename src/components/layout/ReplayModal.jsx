@@ -6,7 +6,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import Modal from "@material-ui/core/Modal";
 import { Container, Fab, TextField, Button, Box } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+
+require("dotenv").config();
+const sendGridMail = require("@sendgrid/mail");
+sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const useStyles = makeStyles((theme) => ({
   mailICon: {
@@ -40,57 +43,31 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "1000",
   },
 }));
-function ReplayModal({ openModal, closeModal }) {
+function ReplayModal({ openModal, closeModal, customerEmail }) {
   const classes = useStyles();
-
-  const { register, handleSubmit, errors } = useForm();
 
   const { emails } = useContext(UserContext);
 
-  const [inputs, setInputs] = useState({
-    email: "",
-    message: "",
-  });
-  const handleOnChange = (event) => {
-    event.persist();
-    setInputs((prev) => ({
-      ...prev,
-      [event.target.id]: event.target.value,
-    }));
-  };
-  /* End input state handling ^^^^ */
+  const [handleOpen, SethandleOpen] = useState(null);
+  const { register, handleSubmit, errors } = useForm();
 
-  // Server state handling
-  const [serverState, setServerState] = useState({
-    submitting: false,
-    status: null,
-  });
-  const handleServerResponse = (ok, msg) => {
-    setServerState({
-      submitting: false,
-      status: { ok, msg },
-    });
-    if (ok) {
-      setInputs({
-        email: "",
-        message: "",
-      });
-    }
-  };
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
-    setServerState({ submitting: true });
-    axios({
-      method: "POST",
-      url: "https://formspree.io/f/xoqpzonp",
-      data: inputs,
-    })
-      .then((r) => {
-        handleServerResponse(true, "Thanks!");
+  const onSubmit = async (data, e) => {
+    const msg = {
+      to: data.email, // Change to your recipient
+      from: "titiamin@icloud.com",
+      subject: data.titel,
+      text: data.text,
+      html: "<strong>Sent by Bricole No-replay </strong>",
+    };
+    await sendGridMail
+      .send(msg)
+      .then(() => {
+        console.log("Email sent");
       })
-      .catch((r) => {
-        handleServerResponse(false, r.response.data.error);
+      .catch((error) => {
+        console.error(error);
       });
+    // await SethandleOpen(closeModal);
   };
 
   return (
@@ -99,33 +76,59 @@ function ReplayModal({ openModal, closeModal }) {
         <Container className={classes.containerModal}>
           <CloseIcon
             className={classes.close}
-            onClick={(e) => closeModal(false)}
+            onClick={(e) => SethandleOpen(closeModal)}
           />
-          <form onSubmit={handleOnSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input
-              id="email"
-              type="email"
+
+          <form
+            className={classes.root}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <TextField
+              className={classes.TextField}
+              value={customerEmail}
+              id="outlined-basic"
+              label="email"
+              variant="outlined"
+              type="text"
+              placeholder="Email"
               name="email"
-              required
-              onChange={handleOnChange}
-              value={inputs.email}
+              inputRef={register({
+                required: true,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                },
+              })}
             />
-            <label htmlFor="message">Message:</label>
-            <textarea
-              id="message"
-              name="message"
-              onChange={handleOnChange}
-              value={inputs.message}
-            ></textarea>
-            <button type="submit" disabled={serverState.submitting}>
-              Submit
-            </button>
-            {serverState.status && (
-              <p className={!serverState.status.ok ? "errorMsg" : ""}>
-                {serverState.status.msg}
-              </p>
+            {errors.email && (
+              <div className={classes.error}> Invalid Email </div>
             )}
+
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
+              label="Titel"
+              name="titel"
+              variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
+            />
+
+            <TextField
+              className={classes.TextField}
+              id="outlined-basic"
+              label="Text  "
+              name="text"
+              multiline
+              rows={8}
+              variant="outlined"
+              inputRef={register({ required: true, minLength: 2 })}
+            />
+
+            <Box className={classes.containerFab}>
+              <Button variant="contained" color="primary" type="submit">
+                Send
+              </Button>
+            </Box>
           </form>
         </Container>
       </Modal>

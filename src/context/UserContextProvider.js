@@ -15,6 +15,7 @@ function UserContextProvider({ children }) {
   const [readEmails, setReadEmails] = useState([]);
   const [bookings, setbookings] = useState([]);
   const [getLocalStorage, setGetLocalStorage] = useState("");
+  const [getLclStorage, setGetLclStorage] = useState("");
   let tempDoc = [];
   let tempDocUsers = [];
   let emailsData = [];
@@ -275,6 +276,8 @@ function UserContextProvider({ children }) {
         bookings,
         getLocalStorage,
         setGetLocalStorage,
+        getLclStorage,
+        setGetLclStorage,
       }}
     >
       {children}

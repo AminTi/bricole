@@ -10,6 +10,7 @@ import {
   Button,
   Box,
   setRef,
+  jssPreset,
 } from "@material-ui/core";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -84,6 +85,8 @@ function CardAdvertesing({
   const [expanded, setExpanded] = React.useState(false);
   const [userData, setUserData] = useState("");
 
+  const cloneES6 = [];
+
   const {
     user,
     getCollection,
@@ -92,6 +95,9 @@ function CardAdvertesing({
     deleteData,
     getDataAds,
     getLocalStorage,
+    setGetLocalStorage,
+    getLclStorage,
+    setGetLclStorage,
   } = useContext(UserContext);
 
   const DeleteHandler = async (e) => {
@@ -107,23 +113,34 @@ function CardAdvertesing({
     id && getCollection(id);
   };
 
-  const localStorageValues = () => {
-    return localStorage.getItem("values");
+  let proff = localStorage.getItem("pro");
+  let town = localStorage.getItem("city");
+
+  // refactor  this shit to one only  function
+  const filerCity =
+    allUsersAds &&
+    allUsersAds.filter((elm) => {
+      return elm.city == getLclStorage;
+    });
+
+  const filerProfession =
+    allUsersAds &&
+    allUsersAds.filter((elm) => {
+      return elm.profession == getLocalStorage && getLocalStorage;
+    });
+
+  const returnCityProfessionOrAllUsersAd = () => {
+    if (filerProfession && filerProfession.length > 0) {
+      console.log("hi");
+      cloneES6.push(filerProfession);
+    } else if (filerCity && filerCity.length > 0) {
+      console.log("hej");
+      cloneES6.push(filerCity);
+    } else {
+      cloneES6.push(allUsersAds);
+    }
   };
-
-  console.log(getLocalStorage);
-
-  // const filerCityOrProfession =
-  //   currentUserAds &&
-  //   currentUserAds.filter((elm) => {
-  //     return elm.localStoragID == localStoragID && localStoragID;
-  //   });
-
-  // console.log(filerCityOrProfession);
-
-  useEffect(() => {
-    localStorageValues();
-  }, []);
+  returnCityProfessionOrAllUsersAd();
 
   const DisplayCard = () => {
     if (currentUserAds) {
@@ -175,10 +192,10 @@ function CardAdvertesing({
           })}
         </Container>
       );
-    } else if (allUsersAds) {
+    } else if (cloneES6.length > 0) {
       return (
         <Container className={classes.wrapper} maxWidth="m">
-          {allUsersAds.map((item, index) => {
+          {cloneES6[0].map((item, index) => {
             return (
               <Card className={classes.root} key={index}>
                 <CardHeader

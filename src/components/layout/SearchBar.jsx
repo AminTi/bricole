@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContextProvider";
 
 import AppBar from "@material-ui/core/AppBar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,23 +28,41 @@ const useStyles = makeStyles((theme) => ({
 function SearchBar({ allUsersAds, allUsers }) {
   const classes = useStyles();
 
+  const {
+    getLocalStorage,
+    setGetLocalStorage,
+    getLclStorage,
+    setGetLclStorage,
+  } = useContext(UserContext);
+
+  const ClickhandlerPro = async (e) => {
+    setGetLclStorage("");
+    localStorage.clear();
+    await localStorage.setItem("pro", e.target.value);
+    await setGetLocalStorage(localStorage.getItem("pro"));
+  };
+  const ClickhandlerCity = async (e) => {
+    setGetLocalStorage("");
+    localStorage.clear();
+    await localStorage.setItem("city", e.target.value);
+    await setGetLclStorage(localStorage.getItem("city"));
+  };
+
   return (
     <Box className={classes.bar}>
       <InputLabel id="demo-simple-select-label">Profession</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
+        value={getLocalStorage}
         className={classes.serachbar1}
+        onChange={ClickhandlerPro}
       >
         <MenuItem value={null}>------</MenuItem>
         {allUsersAds &&
           allUsersAds.map((item, index) => {
             return (
-              <MenuItem
-                value={item.profession}
-                key={index}
-                onClick={(e) => localStorage.setItem("values", item.profession)}
-              >
+              <MenuItem value={item.profession} key={index}>
                 {item.profession}
               </MenuItem>
             );
@@ -53,18 +72,15 @@ function SearchBar({ allUsersAds, allUsers }) {
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
+        value={getLclStorage}
         className={classes.serachbar1}
-        value="City"
+        onChange={ClickhandlerCity}
       >
         <MenuItem value={null}>------</MenuItem>
         {allUsers &&
           allUsers.map((item, index) => {
             return (
-              <MenuItem
-                value={item.city}
-                key={index}
-                onClick={(e) => localStorage.setItem("values", item.city)}
-              >
+              <MenuItem value={item.city} key={index}>
                 {item.city}
               </MenuItem>
             );

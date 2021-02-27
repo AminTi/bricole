@@ -45,8 +45,6 @@ function DisplayEmails(props) {
   }, []);
 
   const clickHandler = (e) => {
-    console.log("hej");
-
     SethandleOpen(true);
   };
 
@@ -100,7 +98,11 @@ function DisplayEmails(props) {
       >
         Answer
       </Button>
-      <ReplayModal openModal={handleOpen} closeModal={SethandleOpen} />
+      <ReplayModal
+        openModal={handleOpen}
+        closeModal={SethandleOpen}
+        customerEmail={currentuerEmails && currentuerEmails[0].email}
+      />
     </Container>
   );
 }
