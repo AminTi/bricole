@@ -22,6 +22,7 @@ import BookingDetails from "./components/BookingDetails";
 const useStyles = makeStyles({
   test: {
     minHeight: 1000,
+    backgroundColor: "rgb(240, 245, 251)",
   },
 });
 

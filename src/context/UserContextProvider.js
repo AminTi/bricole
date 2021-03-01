@@ -60,6 +60,7 @@ function UserContextProvider({ children }) {
 
   const handelLogOut = () => {
     fire.auth().signOut();
+    history.push("/");
   };
 
   const CreateCollection = (data) => {

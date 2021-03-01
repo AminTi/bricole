@@ -1,4 +1,6 @@
+import "date-fns";
 import React, { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -7,6 +9,11 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import ResrvationModal from "./layout/ResrvationModal";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -51,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Select: {
     width: 300,
-    padding: "10px 10",
+    padding: "5px 5px",
   },
 }));
 
@@ -83,18 +90,37 @@ const time3 = [
 function BokaMera(props) {
   const classes = useStyles();
   const [disabledBtn, setDisaBledBtn] = useState(false);
+  const { register, handleSubmit, errors } = useForm();
+
+  let now = new Date();
+
+  const nowString =
+    now.getFullYear() +
+    "-" +
+    (now.getMonth() > 8 ? "" : "0") +
+    (now.getMonth() + 1) +
+    "-" +
+    (now.getDate() > 9 ? "" : "0") +
+    now.getDate();
 
   const [number, setNumber] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(nowString);
   const [hour, SetHour] = useState("");
   const [handleOpen, SethandleOpen] = useState(false);
 
   let id = props.match.params.slug;
   let price = props.match.params.price;
 
-  const { register, handleSubmit, errors } = useForm();
-  let now = new Date();
-  let nowString = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  // let ar = [];
+
+  // let now = new Date();
+
+  // for (let index = 0; index < 7; index++) {
+  //   let nowString = `${now.getFullYear()}-${now.getMonth() + 1}-${
+  //     now.getDate() + index
+  //   } `;
+  //   ar.push(nowString);
+  // }
 
   const handleChange = (e) => {
     setNumber(e.target.value);
@@ -182,18 +208,20 @@ function BokaMera(props) {
   return (
     <Container className={classes.wrapper}>
       <Container className={classes.Subwrapper}>
+        <InputLabel id="demo-simple">Choose a day</InputLabel>
         <Box>
           <TextField
+            labelId="demo-simple"
+            type="datetime-local"
+            format={"DD-MM-YYYY"}
             onChange={(e) => setDate(e.target.value)}
             id="date"
-            label="Choose a Day"
             type="date"
             value={date}
             defaultValue={nowString}
             className={classes.Select}
-            defaultValue="2021-04-22"
-            InputLabelProps={{
-              shrink: true,
+            inputProps={{
+              min: nowString,
             }}
           />
         </Box>
@@ -204,7 +232,7 @@ function BokaMera(props) {
             id="demo-simple-select"
             value={number}
             onClick={handleChange}
-            className={classes.textField}
+            className={classes.Select}
           >
             <MenuItem value={null}>--</MenuItem>
             <MenuItem value={1}>1</MenuItem>

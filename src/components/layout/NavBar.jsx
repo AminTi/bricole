@@ -9,6 +9,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { useHistory } from "react-router";
 
 import MailIcon from "@material-ui/icons/Mail";
+import { Box } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import BubbleChartTwoToneIcon from "@material-ui/icons/BubbleChartTwoTone";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: "blue",
   },
   title: {
     flexGrow: 1,
@@ -43,16 +47,39 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     background: "white",
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
   },
   wrapper: {
     height: "10%",
-    background: "red",
   },
   meniIcon: {
     color: "black",
   },
   link: {
     textDecoration: " none",
+    color: "blue",
+    fontWeight: "bold",
+  },
+
+  bricole: {
+    width: "220px",
+    height: "50px",
+    margin: "0 auto",
+  },
+  signIn: {
+    textDecoration: " none",
+    color: "white",
+    metginLeft: "auto",
+  },
+
+  typograf: {
+    width: "100%",
+    display: "flex",
+  },
+  logIngLogOut: {
+    backgroundColor: "blue",
   },
 }));
 
@@ -74,7 +101,7 @@ function Navbar() {
   const ItemList = [
     {
       text: (
-        <Link to="/" className={classes.link}>
+        <Link to="/" className={classes.link} onClick={(e) => setToggle(false)}>
           Home
         </Link>
       ),
@@ -87,6 +114,7 @@ function Navbar() {
           to="profilDisabled"
           className={classes.link}
           onClick={clickhandler}
+          onClick={(e) => setToggle(false)}
         >
           Profil
         </Link>
@@ -95,7 +123,11 @@ function Navbar() {
     },
     {
       text: (
-        <Link to="/UserPage" className={classes.link}>
+        <Link
+          to="/UserPage"
+          className={classes.link}
+          onClick={(e) => setToggle(false)}
+        >
           Dashboard
         </Link>
       ),
@@ -104,7 +136,11 @@ function Navbar() {
 
     {
       text: (
-        <Link to="/inbox" className={classes.link}>
+        <Link
+          to="/inbox"
+          className={classes.link}
+          onClick={(e) => setToggle(false)}
+        >
           {" "}
           Inbox{" "}
         </Link>
@@ -113,23 +149,48 @@ function Navbar() {
     },
     {
       text: (
-        <Link to="/bookings" className={classes.link}>
+        <Link
+          to="/bookings"
+          className={classes.link}
+          onClick={(e) => setToggle(false)}
+        >
           Bookings
         </Link>
       ),
       icon: <AssignmentIndIcon />,
     },
     {
-      text: "Contacts",
+      text: (
+        <Link onClick={(e) => setToggle(false)} className={classes.link}>
+          Contcts
+        </Link>
+      ),
       icon: <ContactsIcon />,
     },
     {
-      text: "AboutUs",
+      text: (
+        <Link onClick={(e) => setToggle(false)} className={classes.link}>
+          AboutUs
+        </Link>
+      ),
       icon: <InfoIcon />,
     },
     {
-      text: "Back",
-      icon: <ArrowBackTwoToneIcon onClick={(e) => setToggle(false)} />,
+      text: (
+        <Link onClick={(e) => setToggle(false)} className={classes.link}>
+          {" "}
+          Back{" "}
+        </Link>
+      ),
+      icon: <ArrowBackTwoToneIcon />,
+    },
+    {
+      text: (
+        <Link onClick={handelLogOut} className={classes.link}>
+          Logout
+        </Link>
+      ),
+      icon: <BubbleChartTwoToneIcon />,
     },
   ];
 
@@ -140,14 +201,22 @@ function Navbar() {
   const singInSingOut = () => {
     if (user) {
       return (
-        <Button onClick={logOut}>
-          <Link to="/"> Log out </Link>
+        <Button onClick={logOut} variant="contained" color="primary">
+          <Link to="/" className={classes.signIn}>
+            Log out
+          </Link>
         </Button>
       );
     } else {
       return (
-        <Button>
-          <Link to="/login"> Sign In</Link>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.singinBtn}
+        >
+          <Link to="/login" className={classes.signIn}>
+            Sign In
+          </Link>
         </Button>
       );
     }
@@ -168,12 +237,13 @@ function Navbar() {
               >
                 <MenuIcon className={classes.meniIcon} />
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                Bricole
+              <Typography variant="h6" className={classes.typograf}>
+                <Avatar
+                  alt="Bricole"
+                  src="/image/TITLOGA-1.png"
+                  className={classes.bricole}
+                />
               </Typography>
-
-              <Button color="inherit">Login</Button>
-              {singInSingOut()}
             </Toolbar>
           </AppBar>
 
@@ -195,16 +265,19 @@ function Navbar() {
       );
     } else {
       return (
-        <div className={classes.wrapper}>
-          <AppBar position="static" className={classes.appbar}>
-            <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                Bricole
-              </Typography>
-              {singInSingOut()}
-            </Toolbar>
-          </AppBar>
-        </div>
+        <AppBar position="static" className={classes.appbar}>
+          <Toolbar>
+            <Typography variant="h6">
+              <Avatar
+                alt="Bricole"
+                src="/image/TITLOGA-1.png"
+                className={classes.bricole}
+              />
+            </Typography>
+
+            {singInSingOut()}
+          </Toolbar>
+        </AppBar>
       );
     }
   };

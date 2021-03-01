@@ -11,8 +11,9 @@ const useStyles = makeStyles((theme) => ({
   },
   styleContainer: {
     height: 300,
-    background: "#f7f0f0",
+    background: "white",
     margin: "1%",
+    borderRadius: "10px",
   },
 }));
 function Dashboard() {

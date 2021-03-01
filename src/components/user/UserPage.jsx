@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   hide: {
     display: "none",
+
     // remmber : type hiiden do not on materail ui work check why
   },
 }));
@@ -93,7 +94,7 @@ function UserPage() {
     <Container className={classes.container} maxWidth="m">
       <Container maxWidth="xs" className={classes.containerFab}>
         <Fab type="button" onClick={clickHandler} className={classes.fab}>
-          <AddCircleIcon></AddCircleIcon>
+          <AddCircleIcon className={classes.cirkelIcon}></AddCircleIcon>
         </Fab>
       </Container>
       <Modal open={handleOpen} className={classes.containerFab}>

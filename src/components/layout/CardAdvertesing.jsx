@@ -38,12 +38,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     flexWrap: "wrap",
     padding: "10px 10px",
+
     // justifyContent: "center",
   },
   root: {
     width: "345px",
     margin: "1% 1%",
-    backgroundColor: " #f7f0f0",
+    borderRadius: "10px",
   },
   media: {
     height: 0,
@@ -55,9 +56,7 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red,
-  },
+
   delete: {
     color: " red",
     objectFit: "contain",
