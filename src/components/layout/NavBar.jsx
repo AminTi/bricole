@@ -46,10 +46,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "30px",
   },
   appbar: {
+    with: "100%",
     background: "white",
-    display: "flex",
-    width: "100%",
-    justifyContent: "center",
   },
   wrapper: {
     height: "10%",
@@ -68,15 +66,14 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     margin: "0 auto",
   },
+
   signIn: {
     textDecoration: " none",
     color: "white",
-    metginLeft: "auto",
   },
 
   typograf: {
-    width: "100%",
-    display: "flex",
+    with: "100%",
   },
   logIngLogOut: {
     backgroundColor: "blue",
@@ -266,14 +263,12 @@ function Navbar() {
     } else {
       return (
         <AppBar position="static" className={classes.appbar}>
-          <Toolbar>
-            <Typography variant="h6">
-              <Avatar
-                alt="Bricole"
-                src="/image/TITLOGA-1.png"
-                className={classes.bricole}
-              />
-            </Typography>
+          <Toolbar className={classes.typograf}>
+            <Avatar
+              alt="Bricole"
+              src="/image/TITLOGA-1.png"
+              className={classes.bricole}
+            />
 
             {singInSingOut()}
           </Toolbar>
