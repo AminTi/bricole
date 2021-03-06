@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   containerFab: {
     display: "flex",
+
     justifyContent: "center",
     alignItems: "center",
     padding: "10px 10px",
@@ -22,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
   containerModal: {
     background: "white",
     padding: "10px 10x",
+    display: "flex",
+    flexDirection: "column",
   },
   root: {
     display: "flex",
@@ -33,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
   },
   close: {
     color: "black",
-    float: "right",
+    marginLeft: "auto",
     padding: "10px 10px",
-    fontSize: "50px",
+    fontSize: "30px",
     fontWeight: "bold",
     zIndex: "1000",
   },
@@ -91,8 +94,8 @@ function UserPage() {
     });
 
   return (
-    <Container className={classes.container} maxWidth="m">
-      <Container maxWidth="xs" className={classes.containerFab}>
+    <Container className={classes.container} maxWidth="xl">
+      <Container className={classes.containerFab}>
         <Fab type="button" onClick={clickHandler} className={classes.fab}>
           <AddCircleIcon className={classes.cirkelIcon}></AddCircleIcon>
         </Fab>

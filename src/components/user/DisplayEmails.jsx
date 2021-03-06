@@ -101,7 +101,7 @@ function DisplayEmails(props) {
         className={classes.btn}
         onClick={clickHandler}
       >
-        Answer
+        Replay
       </Button>
 
       <ReplayModal

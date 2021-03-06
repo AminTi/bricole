@@ -144,7 +144,7 @@ function CardAdvertesing({
   const DisplayCard = () => {
     if (currentUserAds) {
       return (
-        <Container className={classes.wrapper} maxWidth="xs">
+        <Container className={classes.wrapper} maxWidth="xl">
           {currentUserAds.map((item, index) => {
             return (
               <Card className={classes.root} key={index}>

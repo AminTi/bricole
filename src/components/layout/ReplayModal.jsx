@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
   containerModal: {
     background: "white",
     padding: "10px 10x",
+    display: "flex",
+    flexDirection: "column",
   },
   root: {
     display: "flex",
@@ -35,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
   close: {
     color: "black",
-    float: "right",
+    marginLeft: "auto",
     padding: "10px 10px",
-    fontSize: "50px",
+    fontSize: "30px",
     fontWeight: "bold",
     zIndex: "1000",
   },
