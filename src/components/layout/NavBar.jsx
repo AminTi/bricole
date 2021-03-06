@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     height: "10%",
+    with: "100%",
+    paddingBottom: "10px",
   },
   meniIcon: {
     color: "black",
@@ -74,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
 
   typograf: {
     with: "100%",
+    minWith: "100%",
   },
   logIngLogOut: {
     backgroundColor: "blue",
@@ -91,7 +94,7 @@ function Navbar() {
   const clickhandler = () => {
     if (user) {
       getCollection(user.uid);
-      console.log(user);
+      setToggle(false);
     }
   };
 
@@ -111,7 +114,6 @@ function Navbar() {
           to="profilDisabled"
           className={classes.link}
           onClick={clickhandler}
-          onClick={(e) => setToggle(false)}
         >
           Profil
         </Link>
@@ -234,13 +236,15 @@ function Navbar() {
               >
                 <MenuIcon className={classes.meniIcon} />
               </IconButton>
-              <Typography variant="h6" className={classes.typograf}>
-                <Avatar
-                  alt="Bricole"
-                  src="/image/TITLOGA-1.png"
-                  className={classes.bricole}
-                />
-              </Typography>
+              <Typography
+                variant="h6"
+                className={classes.typograf}
+              ></Typography>
+              <Avatar
+                alt="Bricole"
+                src="/image/TITLOGA-1.png"
+                className={classes.bricole}
+              />
             </Toolbar>
           </AppBar>
 
@@ -262,17 +266,19 @@ function Navbar() {
       );
     } else {
       return (
-        <AppBar position="static" className={classes.appbar}>
-          <Toolbar className={classes.typograf}>
-            <Avatar
-              alt="Bricole"
-              src="/image/TITLOGA-1.png"
-              className={classes.bricole}
-            />
+        <div className={classes.wrapper}>
+          <AppBar position="static" className={classes.appbar}>
+            <Toolbar className={classes.typograf}>
+              <Avatar
+                alt="Bricole"
+                src="/image/TITLOGA-1.png"
+                className={classes.bricole}
+              />
 
-            {singInSingOut()}
-          </Toolbar>
-        </AppBar>
+              {singInSingOut()}
+            </Toolbar>
+          </AppBar>
+        </div>
       );
     }
   };

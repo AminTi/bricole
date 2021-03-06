@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   TextField: {
     display: "flex",
     flexDirection: "column",
+    backgroundColor: "rgb(240, 245, 251)",
   },
   error: {
     color: "red",

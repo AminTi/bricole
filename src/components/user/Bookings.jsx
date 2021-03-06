@@ -24,7 +24,10 @@ const useStyles = makeStyles({
     flexDirection: "row",
     flexWrap: "wrap",
     padding: "20px 10px",
-    // justifyContent: "center",
+    justifyContent: "center",
+
+    backgroundColor: "rgb(240, 245, 251)",
+    minHeight: 800,
   },
   delete: {
     color: "red",
@@ -47,7 +50,7 @@ function Bookings() {
 
   const DeleteHandler = async (e) => {
     const id = e.currentTarget.getAttribute("data-del");
-    console.log(id);
+
     if (id) {
       await deleteData(id, "booking");
       await Getbookings();

@@ -11,6 +11,7 @@ import CardAdvertesing from "../layout/CardAdvertesing";
 const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: 1000,
+    backgroundColor: "rgb(240, 245, 251)",
   },
   containerFab: {
     display: "flex",
@@ -47,13 +48,12 @@ const useStyles = makeStyles((theme) => ({
 
 function UserPage() {
   const classes = useStyles();
-  const [handleOpen, SethandleOpen] = useState(null);
+  const [handleOpen, SethandleOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const {
     user,
     getAd,
     getDataAds,
-
     ads,
     getCollection,
     getAllUsers,

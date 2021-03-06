@@ -22,7 +22,7 @@ import BookingDetails from "./components/BookingDetails";
 const useStyles = makeStyles({
   test: {
     minHeight: 1000,
-    backgroundColor: "rgb(240, 245, 251)",
+    // backgroundColor: "rgb(240, 245, 251)",
   },
 });
 
@@ -44,7 +44,7 @@ function App() {
           <Route path="/inbox" component={Inbox} />
           <Route path="/displayemails/:slug" component={DisplayEmails} />
           <Route path="/bokamera/:slug/:price" component={BokaMera} />
-          <Route path="/orderpage" component={Orderpage} />
+          <Route path="/orderpage/:slug" component={Orderpage} />
           <Route path="/bookings" component={Bookings} />
           <Route path="/bookingdetails/:slug" component={BookingDetails} />
         </Switch>

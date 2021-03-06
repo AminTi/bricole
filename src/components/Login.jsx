@@ -18,8 +18,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  Subcontainer: {
+    // backgroundColor: "rgb(240, 245, 251)",
+    padding: "100px 30px",
+    borderRadius: 10,
+  },
 
   TextField: {
+    backgroundColor: "rgb(240, 245, 251)",
+  },
+  box: {
     display: "flex",
     flexDirection: "column",
     padding: "10px 5px",
@@ -37,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   btnLink: {
     padding: "5px 5px",
+    textDecoration: "none",
   },
 }));
 
@@ -64,64 +73,66 @@ function Login() {
 
   return (
     <Container className={classes.container} maxWidth="sm">
-      <h1> Bricole </h1>
-
-      <Grid
-        container
-        direction="column"
-        justify="space-between"
-        alignItems="stretch"
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Box>
-            <TextField
-              value={eml}
-              onChange={(e) => setEmail(e.target.value)}
-              className={classes.TextField}
-              id="outlined-basic"
-              label="email"
-              variant="outlined"
-              type="text"
-              placeholder="Email"
-              name="email"
-              inputRef={register({
-                required: true,
-                pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i },
-              })}
-            />
-            {errors.email && (
-              <div className={classes.error}> Invalid Email </div>
-            )}
-          </Box>
-          <Box>
-            <TextField
-              value={myPassword}
-              onChange={(e) => setMyPassword(e.target.value)}
-              className={classes.TextField}
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              type="password"
-              placeholder="Password"
-              name="password"
-              inputRef={register({ required: true, minLength: 7 })}
-            />
-            {errors.password && (
-              <div className={classes.error}>
-                Password is required (8 Caracters)
-              </div>
-            )}
-          </Box>
-          <Box className={classes.btnBox}>
-            <Button variant="contained" color="primary" type="submit">
-              SingIn
-            </Button>
-            <Link to="SingUp" className={classes.btnLink}>
-              Create your Bricole Account{" "}
-            </Link>
-          </Box>
-        </form>
-      </Grid>
+      <Container className={classes.Subcontainer} maxWidth="sm">
+        <Grid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="stretch"
+        >
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box className={classes.box}>
+              <TextField
+                value={eml}
+                onChange={(e) => setEmail(e.target.value)}
+                className={classes.TextField}
+                id="outlined-basic"
+                label="email"
+                variant="outlined"
+                type="text"
+                placeholder="Email"
+                name="email"
+                inputRef={register({
+                  required: true,
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  },
+                })}
+              />
+              {errors.email && (
+                <div className={classes.error}> Invalid Email </div>
+              )}
+            </Box>
+            <Box className={classes.box}>
+              <TextField
+                value={myPassword}
+                onChange={(e) => setMyPassword(e.target.value)}
+                className={classes.TextField}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                type="password"
+                placeholder="Password"
+                name="password"
+                inputRef={register({ required: true, minLength: 7 })}
+              />
+              {errors.password && (
+                <div className={classes.error}>
+                  Password is required (8 Caracters)
+                </div>
+              )}
+            </Box>
+            <Box className={classes.btnBox}>
+              <Button variant="contained" color="primary" type="submit">
+                SingIn
+              </Button>
+              <Link to="SingUp" className={classes.btnLink}>
+                Create your Bricole Account{" "}
+              </Link>
+            </Box>
+          </form>
+        </Grid>
+      </Container>
     </Container>
   );
 }

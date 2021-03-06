@@ -25,6 +25,8 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     padding: "20px 10px",
     // justifyContent: "center",
+    backgroundColor: "rgb(240, 245, 251)",
+    minHeight: 800,
   },
   delete: {
     color: "red",

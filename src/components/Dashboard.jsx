@@ -8,7 +8,10 @@ import SerachBar from "./layout/SearchBar";
 const useStyles = makeStyles((theme) => ({
   container: {
     height: 1500,
+    backgroundColor: "rgb(240, 245, 251)",
+    paddingTop: "50px",
   },
+
   styleContainer: {
     height: 300,
     background: "white",
